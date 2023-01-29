@@ -1,0 +1,19 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.btnsContainer{
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+}
+.pagesInfo{
+    letter-spacing: 2px;
+    margin-inline: 8px;
+}
+
+.btnsContainer > button{
+    margin-inline: 2px;
+    cursor: pointer;
+}
