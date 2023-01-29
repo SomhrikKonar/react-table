@@ -12,11 +12,11 @@ export const Container = () => {
       columns,
       original,
       selectedFilter,
-      filteredResults,
       filters,
       search,
       searchAccessors,
       searchResults,
+      results,
     },
     dispatch,
   ] = useStore();
@@ -52,6 +52,11 @@ export const Container = () => {
     dispatch({ type: ActionTypes.SET_FILTERS, payload: filters });
   }, [columns, original]);
 
+  useEffect(() => {
+    let newObj = { default: { default: { default: { rows: original } } } };
+    dispatch({ type: ActionTypes.UPDATE_RESULTS, payload: newObj });
+  }, [original]);
+
   const updateSelectedFilter =
     (state: "filter" | "option") =>
     (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -59,13 +64,13 @@ export const Container = () => {
         e,
         state,
         selectedFilter,
-        filteredResults,
         dispatch,
         original,
         filters,
         search,
         searchAccessors,
         searchResults,
+        results,
       });
     };
 

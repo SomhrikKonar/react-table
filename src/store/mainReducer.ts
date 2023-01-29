@@ -49,6 +49,9 @@ export const mainReducer = (state: IAppState, action: IAction): IAppState => {
       return { ...state, ...payload };
     case ActionTypes.SET_SELECTED_ROWS:
       return { ...state, selectedRows: payload };
+    case ActionTypes.UPDATE_RESULTS:
+      return { ...state, results: payload };
+
     default:
       return state;
   }

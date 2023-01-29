@@ -24,6 +24,17 @@ export interface IAppState {
   canSelectRows: boolean;
   selectAll: boolean;
   selectedRows: { [key: number | string]: TData };
+  results: {
+    [filter: string]: {
+      [options: string]: {
+        [search: string]: {
+          rows: TData[];
+          ascendingOrder?: TData[];
+          descendingOrder?: TData[];
+        };
+      };
+    };
+  };
 }
 
 export interface IDefaultProps {

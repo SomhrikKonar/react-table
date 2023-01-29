@@ -8,7 +8,7 @@ interface IProps {
   original: IAppState["original"];
   searchAccessors: IAppState["searchAccessors"];
   selectedFilter: IAppState["selectedFilter"];
-  filteredResults: IAppState["filteredResults"];
+  results: IAppState["results"];
 }
 
 export const handleSearchResults = ({
@@ -18,7 +18,7 @@ export const handleSearchResults = ({
   original,
   searchAccessors,
   selectedFilter,
-  filteredResults,
+  results,
 }: IProps) => {
   const { filter, option } = selectedFilter;
   const filterEnabled = filter !== "default" && option !== "default";

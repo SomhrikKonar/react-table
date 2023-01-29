@@ -18,4 +18,5 @@ export const initialState = {
   canSelectRows: false,
   selectAll: false,
   selectedRows: {},
+  results: {},
 };

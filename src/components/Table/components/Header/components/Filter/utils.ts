@@ -1,6 +1,10 @@
 import { IAction, IAppState } from "../../../../../../interafaces/stateManager";
 import { TData } from "../../../../../../interafaces/units";
 import { ActionTypes } from "../../../../../../store/actions";
+import {
+  destructureObject,
+  updateObject,
+} from "../../../../utils/objectUtilities";
 import { handleSearchResults } from "../Search/utils";
 
 interface IProps {
@@ -13,12 +17,11 @@ interface IProps {
   original: IAppState["original"];
   searchAccessors: IAppState["searchAccessors"];
   selectedFilter: IAppState["selectedFilter"];
-  filteredResults: IAppState["filteredResults"];
+  results: IAppState["results"];
 }
 export const handleUpdateSelectedFilter = ({
   e,
   selectedFilter,
-  filteredResults,
   dispatch,
   original,
   state,
@@ -26,24 +29,35 @@ export const handleUpdateSelectedFilter = ({
   search,
   searchAccessors,
   searchResults,
+  results,
 }: IProps) => {
   e.stopPropagation();
   let latestFilterValues = { ...selectedFilter, [state]: e.target.value };
   if (state === "filter") latestFilterValues["option"] = "default";
+
   const filterEnabled =
     latestFilterValues.filter !== "default" &&
     latestFilterValues.option !== "default";
+
   let newCurrentRows: TData[] = [];
-  let newFilteredResultsObject: IAppState["filteredResults"] = {
-    ...filteredResults,
+
+  let newResultsObject: IAppState["results"] = {
+    ...results,
   };
+
   if (filterEnabled) {
-    if (
-      filteredResults[latestFilterValues.filter] &&
-      filteredResults[latestFilterValues.filter][latestFilterValues.option]
-    ) {
-      newCurrentRows =
-        filteredResults[latestFilterValues.filter][latestFilterValues.option];
+    //check cached data
+    let cachedRows: IAppState["current"] | undefined = destructureObject({
+      object: newResultsObject,
+      keys: [
+        latestFilterValues.filter,
+        latestFilterValues.option,
+        "original",
+        "rows",
+      ],
+    });
+    if (cachedRows) {
+      newCurrentRows = cachedRows;
     } else {
       let newFilteredResults = original.filter((row) => {
         let accessor = filters[selectedFilter.filter].accessor;
@@ -53,17 +67,19 @@ export const handleUpdateSelectedFilter = ({
         if (value.toString() === latestFilterValues.option) return row;
       });
       newCurrentRows = newFilteredResults;
-
-      if (!newFilteredResultsObject[latestFilterValues.filter])
-        newFilteredResultsObject[latestFilterValues.filter] = {};
-
-      newFilteredResultsObject[latestFilterValues.filter][
-        latestFilterValues.option
-      ] = newFilteredResults;
-
+      newResultsObject = updateObject({
+        object: results,
+        newValue: newCurrentRows,
+        keys: [
+          latestFilterValues.filter,
+          latestFilterValues.option,
+          "original",
+          "rows",
+        ],
+      });
       dispatch({
-        type: ActionTypes.SET_FILTERED_RESULTS,
-        payload: newFilteredResultsObject,
+        type: ActionTypes.UPDATE_RESULTS,
+        payload: newResultsObject,
       });
     }
   } else {
@@ -77,7 +93,7 @@ export const handleUpdateSelectedFilter = ({
       original,
       searchAccessors,
       selectedFilter: latestFilterValues,
-      filteredResults: newFilteredResultsObject,
+      results: newResultsObject,
     });
   } else {
     dispatch({
