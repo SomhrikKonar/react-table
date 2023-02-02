@@ -12,8 +12,8 @@ export const Container: React.FC<ITable> = ({
     <StateProvider
       defaultValues={{
         ...props,
-        current: data,
-        original: data,
+        current: data || [],
+        original: data || [],
       }}
     >
       <View {...props} handleRowSelection={handleRowSelection} />

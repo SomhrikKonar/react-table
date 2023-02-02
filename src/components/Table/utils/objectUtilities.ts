@@ -3,7 +3,7 @@ interface destructureObjectProps {
   keys: string[];
 }
 export const destructureObject = ({ object, keys }: destructureObjectProps) => {
-  let value: any = object;
+  let value: any = { ...object };
   for (let i = 0; i < keys.length; i++) {
     let key = keys[i];
     if (value[key] !== undefined) value = value[key];

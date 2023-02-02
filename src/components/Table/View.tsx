@@ -15,17 +15,29 @@ const View: React.FC<ITableView> = ({
   searchPlaceholder,
   canSelectRows,
   handleRowSelection,
+  styleVariables,
 }) => {
   const [state, dispatch] = useStore();
   const tableRef = React.useRef<HTMLDivElement | null>(null);
-  const { pageNumber, columns } = state;
-  const [mounted, setMounted] = React.useState<boolean>(false);
+  const { pageNumber, columns, mounted, stylesheet } = state;
 
   React.useEffect(() => {
     if (!mounted) return;
     dispatch({ type: ActionTypes.SET_NO_OF_ROWS, payload: numberOfRows });
     dispatch({ type: ActionTypes.SET_PAGE_NO, payload: 1 });
   }, [numberOfRows]);
+
+  React.useEffect(() => {
+    let newStyleVariables = { ...stylesheet };
+    if (styleVariables) {
+      let validObject = Object.keys(styleVariables).length > 0;
+      if (validObject)
+        newStyleVariables = { ...newStyleVariables, ...styleVariables };
+    }
+    Object.entries(newStyleVariables).map(([k, v]) => {
+      document.documentElement.style.setProperty(`--${k}`, v);
+    });
+  }, [styleVariables]);
 
   React.useEffect(() => {
     if (!mounted) return;
@@ -40,7 +52,7 @@ const View: React.FC<ITableView> = ({
   }, [uniqueDataField, usePagination, searchPlaceholder]);
 
   React.useEffect(() => {
-    setMounted(true);
+    dispatch({ type: ActionTypes.UPDATE_PROPS, payload: { mounted: true } });
   }, []);
 
   React.useEffect(() => {
@@ -86,18 +98,27 @@ const View: React.FC<ITableView> = ({
     }
   }, [pageNumber]);
 
-  return (
-    <div className={styles.container}>
-      <Header />
-      <div className={styles["tableContainer"]} ref={tableRef}>
-        <table className={styles.table}>
-          <Head />
-          <Body />
-        </table>
+  const MemoisedContent = React.useMemo(
+    () => (
+      <div className={styles.container}>
+        {
+          <>
+            <Header />
+            <div className={styles["tableContainer"]} ref={tableRef}>
+              <table className={styles.table}>
+                <Head />
+                <Body />
+              </table>
+            </div>
+            {usePagination && <Pagination />}
+          </>
+        }
       </div>
-      {usePagination && <Pagination />}
-    </div>
+    ),
+    []
   );
+
+  return MemoisedContent;
 };
 
 export default React.memo(View);

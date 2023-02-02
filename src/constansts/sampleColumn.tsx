@@ -1,5 +1,6 @@
 import React from "react";
-export const Columns = [
+import { TColumn } from "../interafaces/units";
+export const Columns: TColumn[] = [
   {
     name: "Id",
     accessor: "id",
@@ -12,16 +13,25 @@ export const Columns = [
     },
     searchable: true,
     sortable: true,
+    sortType: "string",
+    minWidth: "200px",
   },
   {
     name: "age",
     accessor: (row: any) => row.age,
     filter: true,
+    sortType: "number",
     searchable: true,
+    sortable: true,
   },
   {
     name: "Birth Date",
-    cell: (row: any) => <div>{row.birthDate}</div>,
+    sortable: true,
+    sortType: "date",
+    accessor: "birthDate",
+    cell: (row: any) => {
+      return <div>{row.birthDate}</div>;
+    },
   },
   {
     name: "Blood Group",

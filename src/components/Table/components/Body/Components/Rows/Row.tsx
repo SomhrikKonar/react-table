@@ -4,7 +4,6 @@ import { useStore } from "../../../../../../store/store";
 import { Element } from "../Element";
 const Row: React.FC<IRow> = ({ data, index }) => {
   const [{ columns }] = useStore();
-
   return (
     <tr>
       {columns.map((column) => (

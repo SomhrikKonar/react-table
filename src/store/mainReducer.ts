@@ -37,10 +37,6 @@ export const mainReducer = (state: IAppState, action: IAction): IAppState => {
         minEntryIndex: 0,
         maxEntryIndex: state.numberOfRows - 1,
       };
-    case ActionTypes.SET_FILTERED_RESULTS:
-      return { ...state, filteredResults: payload };
-    case ActionTypes.SET_SEARCHED_RESULTS:
-      return { ...state, searchResults: payload };
     case ActionTypes.SET_SEARCH_ACCESSORS:
       return { ...state, searchAccessors: payload };
     case ActionTypes.SET_SEARCH:
@@ -51,7 +47,6 @@ export const mainReducer = (state: IAppState, action: IAction): IAppState => {
       return { ...state, selectedRows: payload };
     case ActionTypes.UPDATE_RESULTS:
       return { ...state, results: payload };
-
     default:
       return state;
   }

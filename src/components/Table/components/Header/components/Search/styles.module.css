@@ -1,0 +1,25 @@
+.container{
+    position: relative;
+    width: clamp(180px,35%,350px);
+    height: 35px;
+    border-radius: 10px;
+    border: var(--search-border);
+    overflow: hidden;
+    margin-right: 15px;
+}
+.container>input{
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px 5px 30px;
+    border: 0;
+    outline: 0;
+    font-size: var(--search-font-size);
+    color: var(--search-font-color);
+    font-weight: var(--search-font-weight);
+}
+.container>img{
+    position: absolute;
+    left: 5px;
+    top: calc(50% - 1px);
+    transform: translateY(-50%);
+}

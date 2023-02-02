@@ -1,4 +1,4 @@
-import { TColumn, TData } from "./units";
+import { TColumn, TData, TStyleVariables } from "./units";
 
 export interface ITable {
   columns: TColumn[];
@@ -9,6 +9,8 @@ export interface ITable {
   searchPlaceholder?: string;
   canSelectRows?: boolean;
   handleRowSelection?: (rows: TData[]) => void;
+  handleRowClick?: (row: TData) => void;
+  styleVariables?: TStyleVariables;
 }
 
 export type ITableView = Partial<ITable>;
@@ -35,13 +37,15 @@ export interface IElement {
 
 export interface IHeadElement {
   content: JSX.Element | string | number;
-  sortable?: boolean;
+  sortType: "string" | "number" | "date";
+  name: string;
+  accessor: TColumn["accessor"];
 }
 
 export interface IFilter {
   handleUpdateSelectedFilter: (
     state: "filter" | "option"
-  ) => (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  ) => (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export interface ISearch {
@@ -58,4 +62,13 @@ export interface ICheckboxContainer {
 export interface ICheckboxView {
   selected: boolean;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface ISelectInput {
+  handleChange: (e: React.MouseEvent<HTMLDivElement>) => void;
+  value: string;
+  options: (string | number)[];
+  isDisabled?: boolean;
+  icon?: string;
+  defaultMessage?: string;
 }

@@ -1,4 +1,7 @@
-export const initialState = {
+import { styleVariables } from "../constansts/styleValriables";
+import { IAppState } from "../interafaces/stateManager";
+
+export const initialState: IAppState = {
   columns: [],
   current: [],
   original: [],
@@ -12,11 +15,17 @@ export const initialState = {
   search: "",
   searchPlaceholder: "Search here...",
   selectedFilter: { filter: "default", option: "default" },
-  filteredResults: {},
   searchAccessors: [],
-  searchResults: {},
   canSelectRows: false,
   selectAll: false,
   selectedRows: {},
   results: {},
+  selectedSort: {
+    option: "default",
+    order: "default",
+    accessor: "",
+    sortType: "string",
+  },
+  stylesheet: styleVariables,
+  mounted: false,
 };

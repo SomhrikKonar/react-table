@@ -10,7 +10,7 @@ export const Container: React.FC<ICheckboxContainer> = ({
   header,
   index,
 }) => {
-  const [{ selectedRows, selectAll, current }, dispatch] = useStore();
+  const [{ selectedRows, selectAll, current, mounted }, dispatch] = useStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation();
@@ -42,7 +42,7 @@ export const Container: React.FC<ICheckboxContainer> = ({
   };
 
   React.useEffect(() => {
-    if (!header) return;
+    if (!header || !mounted) return;
     //will be called when the component is header (as it passes all current rows as props) and if header is in checked
     let newObj: IAppState["selectedRows"] = {};
     if (selectAll) {

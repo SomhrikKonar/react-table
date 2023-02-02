@@ -1,47 +1,102 @@
+*{
+    box-sizing: border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+/*Top Wrapper*/
 .container{
-    height: 80vh;
+    height: 90vh;
     display: flex;
     flex-direction: column;
 }
 
+/*Table Wrapper*/
 .tableContainer{
     height: min-content;
     max-height: 100%;
     overflow: auto;
-    border-block: 1px solid black;
+    border: 2px solid var(--table-container-border);
 }
 
+/*Table*/
 .table {
-    border-collapse: collapse;
+    border-collapse: separate;
     position: relative;
     width: 100%;
     height: 100%;
+    border-spacing: 0;
 }
 
+/*Table head*/
 .table>thead{
     position: sticky;
     top: 0;
-    background-color: aqua;
+    background-color: var(--header-bg);
+}
+
+/*Table header cells*/
+.table th {
+    height: 45px;
+    color: var(--header-color);
+    white-space: nowrap;
+    font-size: var(--header-font-size);
+    font-weight: var(--header-font-weight);
+}
+
+/*Table body cells*/
+.table td {
+    height: 40px;
+    color: var(--body-font-color);
+    font-size: var(--body-font-size);
+    font-weight: var(--body-font-weight);
+}
+
+/*Zebra Stripes*/
+.table tr:nth-child(even) {
+    background-color: var(--even-row-bg);
+}
+
+/* Row Hover*/
+.table>tbody>tr:hover {
+    background-color: var(--row-hover);
+}
+
+/* No Row Found Container */
+.table>tbody>.noRowContainer{
     height: 50px;
-    border-left: 1px solid black;
+    position: relative;
+}
+.noRowContainer>.noRowMessage{
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--body-font-color);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+}
+.table>tbody>.noRowContainer:hover{
+    background-color: transparent !important;
 }
 
-.table>tbody{
-    border-inline: 1px solid black;
-}
 
-.table>tbody>tr{
-    border-bottom: 1px solid black;
-}
 
-.table>tbody>tr:last-child{
-    border-bottom: 0;
-}
-
-td,th{
-    border-right:1px solid black;
-    padding: 5px 10px;
+/*Text alignment, padding*/
+.table>tbody>tr>td,
+.table>thead>tr>th{
     text-align: center;
+    padding: 5px 10px;
+}
+
+/*Column separating lines*/
+.table>tbody>tr>td{
+    border-right: 2px solid var(--body-column-separator);
+}
+.table>thead>tr>th {
+    border-right: 2px solid var(--header-column-separator);
+}
+.table>tbody>tr>td:last-child,
+.table>thead>tr>th:last-child {
+    border-right: 0;
 }
 
 /* scrollbar styling*/
@@ -49,14 +104,12 @@ td,th{
     width: 10px;
     height: 10px;
 }
-
 .tableContainer::-webkit-scrollbar-track{
-    background:#ededed;
+    background: var(--scrollbar-track-bg);
     border-radius: 5px;
 }
-
 .tableContainer::-webkit-scrollbar-thumb{
-    background: #c9c9c9;
+    background: var(--scrollbar-thumb-bg);
     border-radius: 10px;
     padding-inline: 2px;
     border: 2px solid #ededed;

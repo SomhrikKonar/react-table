@@ -5,19 +5,20 @@ import {
   destructureObject,
   updateObject,
 } from "../../../../utils/objectUtilities";
+import { sortingHandler } from "../../../Head/components/Element/utils";
 import { handleSearchResults } from "../Search/utils";
 
 interface IProps {
-  e: React.ChangeEvent<HTMLSelectElement>;
+  e: React.MouseEvent<HTMLDivElement>;
   filters: IAppState["filters"];
   state: "filter" | "option";
   search: IAppState["search"];
   dispatch: React.Dispatch<IAction>;
-  searchResults: IAppState["searchResults"];
   original: IAppState["original"];
   searchAccessors: IAppState["searchAccessors"];
   selectedFilter: IAppState["selectedFilter"];
   results: IAppState["results"];
+  selectedSort: IAppState["selectedSort"];
 }
 export const handleUpdateSelectedFilter = ({
   e,
@@ -28,16 +29,20 @@ export const handleUpdateSelectedFilter = ({
   filters,
   search,
   searchAccessors,
-  searchResults,
   results,
+  selectedSort,
 }: IProps) => {
   e.stopPropagation();
-  let latestFilterValues = { ...selectedFilter, [state]: e.target.value };
+  const value = (e.target as HTMLDivElement).accessKey;
+  let latestFilterValues = { ...selectedFilter, [state]: value };
   if (state === "filter") latestFilterValues["option"] = "default";
 
   const filterEnabled =
     latestFilterValues.filter !== "default" &&
     latestFilterValues.option !== "default";
+
+  const sortEnabled =
+    selectedSort.order !== "default" && selectedSort.option !== "default";
 
   let newCurrentRows: TData[] = [];
 
@@ -47,7 +52,7 @@ export const handleUpdateSelectedFilter = ({
 
   if (filterEnabled) {
     //check cached data
-    let cachedRows: IAppState["current"] | undefined = destructureObject({
+    let cachedRows = destructureObject({
       object: newResultsObject,
       keys: [
         latestFilterValues.filter,
@@ -56,7 +61,7 @@ export const handleUpdateSelectedFilter = ({
         "rows",
       ],
     });
-    if (cachedRows) {
+    if (Array.isArray(cachedRows)) {
       newCurrentRows = cachedRows;
     } else {
       let newFilteredResults = original.filter((row) => {
@@ -85,15 +90,23 @@ export const handleUpdateSelectedFilter = ({
   } else {
     newCurrentRows = original;
   }
+
   if (search) {
     handleSearchResults({
       search,
       dispatch,
-      searchResults,
-      original,
       searchAccessors,
       selectedFilter: latestFilterValues,
       results: newResultsObject,
+      selectedSort,
+    });
+  } else if (sortEnabled) {
+    sortingHandler({
+      selectedSort,
+      results: newResultsObject,
+      selectedFilter: latestFilterValues,
+      search,
+      dispatch,
     });
   } else {
     dispatch({
@@ -101,6 +114,7 @@ export const handleUpdateSelectedFilter = ({
       payload: newCurrentRows,
     });
   }
+
   dispatch({
     type: ActionTypes.SELECT_FILTERS,
     payload: latestFilterValues,

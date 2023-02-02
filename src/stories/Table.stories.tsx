@@ -21,4 +21,6 @@ Table.args = {
   usePagination: true,
   canSelectRows: false,
   handleRowSelection: (rows) => console.log(rows),
+  styleVariables: { "font-family": "Georgia, serif" },
+  handleRowClick: (row) => console.log(row),
 };

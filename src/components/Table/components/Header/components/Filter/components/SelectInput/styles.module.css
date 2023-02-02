@@ -1,0 +1,100 @@
+.container{
+    position: relative;
+    width: clamp(150px, 20vw, 200px);
+    margin-left: 15px;
+    user-select: none;
+    border-radius: 10px;
+}
+
+.disabledContainer{
+    opacity: 0.5;
+    background-color: var(--disabled-select-container);
+}
+
+.field {
+    font-size: var(--options-font-size);
+    color: var(--selected-option-color);
+    width: calc(100%);
+    height: 35px;
+    border-radius: 10px;
+    border: 2px solid var(--select-container-border);
+    display: flex;
+    align-items: center;
+    padding: 5px 15px 5px 5px;
+    max-width: 100%;
+}
+
+.field::after {
+    position: absolute;
+    content: "";
+    display: block;
+    height: 7px;
+    width: 7px;
+    border-left: 2px solid var(--select-container-border);
+    border-bottom: 2px solid var(--select-container-border);
+    top: calc(50% - 2px);
+    transform: translateY(-50%) rotate(-45deg);
+    right: 10px;
+}
+
+.field>img{
+    margin-right: 10px;
+}
+
+.value{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.optionsContainer{
+    position: absolute;
+    z-index: 1;
+    background-color: var(--options-container-bg);
+    border: var(--options-container-border);
+    box-shadow: var(--options-container-box-shadow);
+    width: max-content;
+    min-width: 100%;
+    max-height: 250px;
+    overflow: auto;
+    right: 0;
+}
+
+.option{
+    padding: 5px;
+    border-bottom: 1px solid var(--option-separator);
+    text-transform: capitalize;
+    cursor: pointer;
+    color:var(--options-color);
+    font-size: var(--options-font-size);
+}
+
+.selectedOption{
+    background-color: var(--selected-option-bg);
+}
+
+.option:last-child{
+    border: 0;
+}
+
+.option:hover{
+    background-color: var(--option-hover)
+}
+
+/* scrollbar styling*/
+.optionsContainer::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.optionsContainer::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-bg);
+    border-radius: 5px;
+}
+
+.optionsContainer::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-bg);
+    border-radius: 10px;
+    padding-inline: 2px;
+    border: 1px solid #ededed;
+}

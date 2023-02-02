@@ -15,15 +15,14 @@ export const Container = () => {
       filters,
       search,
       searchAccessors,
-      searchResults,
       results,
+      selectedSort,
     },
     dispatch,
   ] = useStore();
 
   useEffect(() => {
     let filters: TFilters = {};
-
     columns.forEach((column) => {
       if (column.filter) {
         filters[column.name] = {
@@ -32,7 +31,6 @@ export const Container = () => {
         };
       }
     });
-
     original.forEach((row) => {
       Object.entries(filters).forEach(([key, value]) => {
         if (!value.accessor) return;
@@ -42,24 +40,21 @@ export const Container = () => {
         }
       });
     });
-
     Object.entries(filters).map(([key, value]) => {
       if (value.options.size <= 0) {
         delete filters[key];
       }
     });
-
     dispatch({ type: ActionTypes.SET_FILTERS, payload: filters });
   }, [columns, original]);
 
   useEffect(() => {
-    let newObj = { default: { default: { default: { rows: original } } } };
+    let newObj = { default: { default: { original: { rows: original } } } };
     dispatch({ type: ActionTypes.UPDATE_RESULTS, payload: newObj });
   }, [original]);
 
   const updateSelectedFilter =
-    (state: "filter" | "option") =>
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
+    (state: "filter" | "option") => (e: React.MouseEvent<HTMLDivElement>) => {
       handleUpdateSelectedFilter({
         e,
         state,
@@ -69,8 +64,8 @@ export const Container = () => {
         filters,
         search,
         searchAccessors,
-        searchResults,
         results,
+        selectedSort,
       });
     };
 

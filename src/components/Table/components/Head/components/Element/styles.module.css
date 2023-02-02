@@ -1,0 +1,30 @@
+.headElementContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-inline: 20px;
+    margin: auto;
+    width: fit-content;
+}
+.headElementContainer>p{
+    margin: 0;
+    width: fit-content;
+}
+.headElementContainer>button{
+    position: absolute;
+    right: 0;
+    height: 12px;
+    width: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+}
+.headElementContainer>button:active{
+    transform: scale(0.95);
+}

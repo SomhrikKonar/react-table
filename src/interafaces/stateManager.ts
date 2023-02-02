@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { ActionTypes } from "../store/actions";
-import { TColumn, TData, TFilters } from "./units";
+import { TColumn, TData, TFilters, TStyleVariables } from "./units";
 
 export interface IAppState {
   current: TData[];
@@ -14,27 +14,36 @@ export interface IAppState {
   usePagination: boolean;
   filters: TFilters;
   selectedFilter: { filter: string; option: string };
-  filteredResults: { [key: string]: { [key: string]: TData[] } };
+  selectedSort: {
+    option: string;
+    order: "ascending" | "descending" | "default";
+    accessor?: string | ((row: TData) => string);
+    sortType: "string" | "number" | "date";
+  };
   search: string;
   searchPlaceholder: string;
   searchAccessors: TColumn["accessor"][];
-  searchResults: {
-    [filter: string]: { [option: string]: { [search: string]: TData[] } };
-  };
   canSelectRows: boolean;
   selectAll: boolean;
+  mounted: boolean;
   selectedRows: { [key: number | string]: TData };
+  handleRowClick?: (row: TData) => void;
   results: {
     [filter: string]: {
-      [options: string]: {
+      [option: string]: {
         [search: string]: {
           rows: TData[];
-          ascendingOrder?: TData[];
-          descendingOrder?: TData[];
+          sortedResults: {
+            [sortBy: string]: {
+              ascending?: TData[];
+              descending?: TData[];
+            };
+          };
         };
       };
     };
   };
+  stylesheet: TStyleVariables;
 }
 
 export interface IDefaultProps {

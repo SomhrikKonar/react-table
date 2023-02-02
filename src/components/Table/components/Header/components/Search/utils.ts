@@ -1,66 +1,76 @@
 import { IAction, IAppState } from "../../../../../../interafaces/stateManager";
 import { ActionTypes } from "../../../../../../store/actions";
+import {
+  destructureObject,
+  updateObject,
+} from "../../../../utils/objectUtilities";
+import { sortingHandler } from "../../../Head/components/Element/utils";
 
 interface IProps {
   search: IAppState["search"];
   dispatch: React.Dispatch<IAction>;
-  searchResults: IAppState["searchResults"];
-  original: IAppState["original"];
   searchAccessors: IAppState["searchAccessors"];
   selectedFilter: IAppState["selectedFilter"];
   results: IAppState["results"];
+  selectedSort: IAppState["selectedSort"];
 }
 
 export const handleSearchResults = ({
   search,
   dispatch,
-  searchResults,
-  original,
   searchAccessors,
   selectedFilter,
   results,
+  selectedSort,
 }: IProps) => {
   const { filter, option } = selectedFilter;
-  const filterEnabled = filter !== "default" && option !== "default";
 
-  //cleared search text field
-  if (!search) {
-    if (!filterEnabled)
-      dispatch({ type: ActionTypes.SET_CURRENT_ROWS, payload: original });
+  let keys = [];
+
+  if (filter !== "default" && option !== "default") {
+    keys = [filter, option, search || "original", "rows"];
+  } else {
+    keys = ["default", "default", search || "original", "rows"];
+  }
+
+  const sortEnabled =
+    selectedSort.order !== "default" && selectedSort.option !== "default";
+
+  //cached results
+  const existingSearchResults: IAppState["results"] = destructureObject({
+    object: results,
+    keys: keys,
+  });
+
+  if (existingSearchResults) {
+    console.log("returning cached rows", existingSearchResults);
+    if (sortEnabled)
+      sortingHandler({
+        selectedSort,
+        results,
+        selectedFilter,
+        search,
+        dispatch,
+      });
     else
       dispatch({
         type: ActionTypes.SET_CURRENT_ROWS,
-        payload: filteredResults[selectedFilter.filter][selectedFilter.option],
+        payload: existingSearchResults,
       });
     return;
   }
 
-  //checking for cache
-  let existingSearchResults = !filterEnabled
-    ? searchResults["default"]
-      ? searchResults["default"]["default"]
-      : undefined
-    : searchResults[filter]
-    ? searchResults[filter][option]
-    : undefined;
-
-  if (existingSearchResults && existingSearchResults[search]) {
-    console.log("returning cached rows", existingSearchResults[search]);
-
-    dispatch({
-      type: ActionTypes.SET_CURRENT_ROWS,
-      payload: existingSearchResults[search],
-    });
-    return;
-  }
-
   let editedSearch = search.toLowerCase().replaceAll("+", "\\+");
+  let destructureKeys = [...keys];
+  destructureKeys[2] = "original";
+  const filteredResults = destructureObject({
+    object: results,
+    keys: destructureKeys,
+  });
 
+  if (!Array.isArray(filteredResults)) return;
   //filtering
-  const parentArray = filterEnabled
-    ? filteredResults[filter][option]
-    : original;
-  let results = parentArray.filter((row) => {
+  let newResults = filteredResults.filter((row) => {
     for (let i = 0; i < searchAccessors.length; i++) {
       //stored accessor
       let accessor = searchAccessors[i];
@@ -81,21 +91,29 @@ export const handleSearchResults = ({
       }
     }
   });
-
   //updating new search results
-  let newSearchResults = searchResults;
-  newSearchResults[filter] = searchResults[filter] || {};
-  newSearchResults[filter][option] =
-    { ...newSearchResults[filter][option] } || {};
-  newSearchResults[filter][option][search] = results;
-
+  let updatedResults = updateObject({
+    object: results,
+    keys: keys,
+    newValue: newResults,
+  });
   //updating context
   dispatch({
-    type: ActionTypes.SET_SEARCHED_RESULTS,
-    payload: newSearchResults,
+    type: ActionTypes.UPDATE_RESULTS,
+    payload: updatedResults,
   });
-  dispatch({
-    type: ActionTypes.SET_CURRENT_ROWS,
-    payload: results,
-  });
+
+  if (sortEnabled)
+    sortingHandler({
+      selectedSort,
+      results: updatedResults,
+      selectedFilter,
+      search,
+      dispatch,
+    });
+  else
+    dispatch({
+      type: ActionTypes.SET_CURRENT_ROWS,
+      payload: newResults,
+    });
 };

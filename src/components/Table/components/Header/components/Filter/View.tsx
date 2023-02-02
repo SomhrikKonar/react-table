@@ -1,35 +1,31 @@
 import React from "react";
 import { IFilter } from "../../../../../../interafaces/blocks";
 import { useStore } from "../../../../../../store/store";
+import SelectInput from "./components/SelectInput";
 import styles from "./styles.module.css";
+import FilterIcon from "../../../../../../assests/Filter.svg";
 const View: React.FC<IFilter> = ({ handleUpdateSelectedFilter }) => {
   const [{ filters, selectedFilter }] = useStore();
   const filterOptions = Object.keys(filters);
   return filterOptions.length > 0 ? (
     <div className={styles.container}>
-      <select
+      <SelectInput
         value={selectedFilter.filter}
-        onChange={handleUpdateSelectedFilter("filter")}
-      >
-        <option value="default">All</option>
-        {filterOptions.map((option) => (
-          <option value={option} key={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-      <select
-        onChange={handleUpdateSelectedFilter("option")}
+        options={filterOptions}
+        handleChange={handleUpdateSelectedFilter("filter")}
+        icon={FilterIcon}
+        defaultMessage="Click to filter"
+      />
+      <SelectInput
+        isDisabled={selectedFilter.filter === "default"}
         value={selectedFilter.option}
-      >
-        <option value="default">All</option>
-        {filters[selectedFilter.filter] &&
-          [...filters[selectedFilter.filter].options].map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-      </select>
+        options={
+          filters[selectedFilter.filter]
+            ? [...filters[selectedFilter.filter].options]
+            : []
+        }
+        handleChange={handleUpdateSelectedFilter("option")}
+      />
     </div>
   ) : (
     <></>

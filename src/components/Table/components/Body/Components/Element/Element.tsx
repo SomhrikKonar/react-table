@@ -6,8 +6,25 @@ const Element: React.FC<IElement> = ({ data, column, index }) => {
   const callHandleTableElement = () => {
     return handleTableElement({ data, column, index });
   };
+
   const detail = React.useMemo(callHandleTableElement, [data, column, index]);
-  return <td>{detail}</td>;
+
+  const accessKey = React.useMemo(() => {
+    let str = column.name;
+    if (str.indexOf(" ") !== -1) {
+      str = "";
+      for (let i = 0; i < column.name.length; i++) {
+        if (column.name[i] !== " ") str += column.name[i];
+      }
+    }
+    return str + " " + index;
+  }, [column.name, index]);
+
+  return (
+    <td style={{ minWidth: column.minWidth || "auto" }} accessKey={accessKey}>
+      {detail}
+    </td>
+  );
 };
 
 export default React.memo(Element);

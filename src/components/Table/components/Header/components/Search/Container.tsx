@@ -7,15 +7,7 @@ import View from "./View";
 
 export const Container = () => {
   const [
-    {
-      searchResults,
-      columns,
-      original,
-      searchAccessors,
-      selectedFilter,
-      filteredResults,
-      search,
-    },
+    { results, columns, selectedSort, searchAccessors, selectedFilter, search },
     dispatch,
   ] = useStore();
 
@@ -40,12 +32,11 @@ export const Container = () => {
     let timestamp = setTimeout(() => {
       handleSearchResults({
         search,
-        searchResults,
-        original,
         dispatch,
         searchAccessors,
         selectedFilter,
-        filteredResults,
+        results,
+        selectedSort,
       });
     }, 250);
     return () => {

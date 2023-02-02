@@ -8,11 +8,18 @@
     display: flex;
     align-items: center;
 }
+.description{
+    color: var(--pagination-text-color);
+    font-size: var(--pagiantion-text-size);
+    font-weight: var(--pagination-text-weight);
+}
 .pagesInfo{
     letter-spacing: 2px;
     margin-inline: 8px;
+    color: var(--pagination-page-info-color);
+    font-size: var(--pagiantion-page-info-size);
+    font-weight: var(--pagination-page-info-weight);
 }
-
 .btnsContainer > button{
     margin-inline: 2px;
     cursor: pointer;
