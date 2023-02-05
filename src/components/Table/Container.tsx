@@ -16,7 +16,7 @@ export const Container: React.FC<ITable> = ({
         original: data || [],
       }}
     >
-      <View {...props} handleRowSelection={handleRowSelection} />
+      <View {...props} data={data} handleRowSelection={handleRowSelection} />
     </StateProvider>
   );
 };

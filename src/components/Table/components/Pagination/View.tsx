@@ -8,8 +8,16 @@ const View: React.FC<IPagination> = ({
   goToNextPage,
   goToPreviousPage,
 }) => {
-  const [{ pageNumber, current, numberOfRows, minEntryIndex, maxEntryIndex }] =
-    useStore();
+  const [
+    {
+      pageNumber,
+      current,
+      numberOfRows,
+      minEntryIndex,
+      maxEntryIndex,
+      loading,
+    },
+  ] = useStore();
 
   let minEntryNumber: number = minEntryIndex + 1;
   let maxEntryNumber: number = maxEntryIndex + 1;
@@ -28,14 +36,14 @@ const View: React.FC<IPagination> = ({
         <button
           className={styles.btn}
           onClick={goToFirstPage}
-          disabled={pageNumber === 1}
+          disabled={pageNumber === 1 || loading || current.length <= 0}
         >
           {"<<"}
         </button>
         <button
           className={styles.btn}
           onClick={goToPreviousPage}
-          disabled={pageNumber === 1}
+          disabled={pageNumber === 1 || loading || current.length <= 0}
         >
           {"<"}
         </button>
@@ -45,14 +53,18 @@ const View: React.FC<IPagination> = ({
         <button
           className={styles.btn}
           onClick={goToNextPage}
-          disabled={pageNumber === maxPageNumber}
+          disabled={
+            pageNumber === maxPageNumber || loading || current.length <= 0
+          }
         >
           {">"}
         </button>
         <button
           className={styles.btn}
           onClick={goToLastPage}
-          disabled={pageNumber === maxPageNumber}
+          disabled={
+            pageNumber === maxPageNumber || loading || current.length <= 0
+          }
         >
           {">>"}
         </button>

@@ -7,6 +7,7 @@ import FilterIcon from "../../../../../../assests/Filter.svg";
 const View: React.FC<IFilter> = ({ handleUpdateSelectedFilter }) => {
   const [{ filters, selectedFilter }] = useStore();
   const filterOptions = Object.keys(filters);
+
   return filterOptions.length > 0 ? (
     <div className={styles.container}>
       <SelectInput

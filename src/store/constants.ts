@@ -28,4 +28,6 @@ export const initialState: IAppState = {
   },
   stylesheet: styleVariables,
   mounted: false,
+  fixedTableHeight: false,
+  loading: false,
 };

@@ -26,6 +26,7 @@ type TStyleVariablesKeys =
   | "header-bg"
   | "header-column-separator"
   | "even-row-bg"
+  | "odd-row-bg"
   | "row-hover"
   | "body-column-separator"
   | "scrollbar-track-bg"

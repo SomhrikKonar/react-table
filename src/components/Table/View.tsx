@@ -16,10 +16,13 @@ const View: React.FC<ITableView> = ({
   canSelectRows,
   handleRowSelection,
   styleVariables,
+  fixedTableHeight,
+  loading,
+  data,
 }) => {
-  const [state, dispatch] = useStore();
+  const [{ pageNumber, columns, mounted, stylesheet, current }, dispatch] =
+    useStore();
   const tableRef = React.useRef<HTMLDivElement | null>(null);
-  const { pageNumber, columns, mounted, stylesheet } = state;
 
   React.useEffect(() => {
     if (!mounted) return;
@@ -47,9 +50,27 @@ const View: React.FC<ITableView> = ({
         uniqueDataField,
         usePagination,
         searchPlaceholder: searchPlaceholder || "Search here ...",
+        fixedTableHeight,
+        loading,
       },
     });
-  }, [uniqueDataField, usePagination, searchPlaceholder]);
+  }, [
+    uniqueDataField,
+    usePagination,
+    searchPlaceholder,
+    fixedTableHeight,
+    loading,
+  ]);
+
+  React.useEffect(() => {
+    if (!mounted) return;
+    dispatch({
+      type: ActionTypes.UPDATE_PROPS,
+      payload: {
+        original: data,
+      },
+    });
+  }, [data]);
 
   React.useEffect(() => {
     dispatch({ type: ActionTypes.UPDATE_PROPS, payload: { mounted: true } });
@@ -96,7 +117,7 @@ const View: React.FC<ITableView> = ({
     if (tableRef.current) {
       tableRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     }
-  }, [pageNumber]);
+  }, [pageNumber, current]);
 
   const MemoisedContent = React.useMemo(
     () => (
@@ -104,10 +125,15 @@ const View: React.FC<ITableView> = ({
         {
           <>
             <Header />
-            <div className={styles["tableContainer"]} ref={tableRef}>
+            <div
+              className={`${styles["tableContainer"]} ${
+                fixedTableHeight ? styles["fixedTableContainer"] : ""
+              }`}
+              ref={tableRef}
+            >
               <table className={styles.table}>
                 <Head />
-                <Body />
+                <Body tableContainerRef={tableRef} />
               </table>
             </div>
             {usePagination && <Pagination />}
@@ -115,7 +141,7 @@ const View: React.FC<ITableView> = ({
         }
       </div>
     ),
-    []
+    [fixedTableHeight]
   );
 
   return MemoisedContent;

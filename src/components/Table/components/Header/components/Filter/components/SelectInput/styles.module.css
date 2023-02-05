@@ -96,5 +96,5 @@
     background: var(--scrollbar-thumb-bg);
     border-radius: 10px;
     padding-inline: 2px;
-    border: 1px solid #ededed;
+    border: 1px solid var(--scrollbar-track-bg);
 }

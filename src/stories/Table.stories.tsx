@@ -1,8 +1,10 @@
 import { Table as TableStory } from "../components";
 import React from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import data from "../constansts/sampleData.json";
-import Columns from "../constansts";
+import data from "../dummyData/sampleData.json";
+import { Columns } from "../dummyData/sampleColumn";
+import Loader from "../dummyData/Loader";
+
 export default {
   title: "My Components/Table",
   component: TableStory,
@@ -23,4 +25,7 @@ Table.args = {
   handleRowSelection: (rows) => console.log(rows),
   styleVariables: { "font-family": "Georgia, serif" },
   handleRowClick: (row) => console.log(row),
+  fixedTableHeight: true,
+  loading: false,
+  loadingComponent: <Loader />,
 };

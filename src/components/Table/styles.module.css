@@ -51,8 +51,11 @@
 }
 
 /*Zebra Stripes*/
-.table tr:nth-child(even) {
+.table>tbody tr:nth-child(even) {
     background-color: var(--even-row-bg);
+}
+.table>tbody tr:nth-child(odd) {
+    background-color: var(--odd-row-bg);
 }
 
 /* Row Hover*/
@@ -61,11 +64,11 @@
 }
 
 /* No Row Found Container */
-.table>tbody>.noRowContainer{
+.emptyBody{
     height: 50px;
     position: relative;
 }
-.noRowContainer>.noRowMessage{
+.emptyBody>.emptyBodyMessage{
     font-size: 16px;
     font-weight: 600;
     color: var(--body-font-color);
@@ -73,12 +76,12 @@
     left: 50%;
     transform: translate(-50%,-50%);
     position: absolute;
+    height: auto;
+    padding: 0;
 }
-.table>tbody>.noRowContainer:hover{
+.emptyBody:hover{
     background-color: transparent !important;
 }
-
-
 
 /*Text alignment, padding*/
 .table>tbody>tr>td,
@@ -99,6 +102,23 @@
     border-right: 0;
 }
 
+/* Fixed table height */
+.fixedTableContainer{
+    flex: 1;
+}
+.fixedTableContainer>.table{
+    height: auto;
+}
+.disableScrollTableContainer{
+    overflow: hidden;
+}
+.emptyRows:nth-child(even):hover{
+    background-color: var(--even-row-bg);
+}
+.emptyRows:nth-child(odd):hover {
+    background-color: var(--odd-row-bg);;
+}
+
 /* scrollbar styling*/
 .tableContainer::-webkit-scrollbar{
     width: 10px;
@@ -112,5 +132,5 @@
     background: var(--scrollbar-thumb-bg);
     border-radius: 10px;
     padding-inline: 2px;
-    border: 2px solid #ededed;
+    border: 2px solid var(--scrollbar-track-bg);
 }

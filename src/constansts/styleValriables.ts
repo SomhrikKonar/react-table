@@ -6,6 +6,7 @@ export const styleVariables: TStyleVariables = {
   "header-bg": "#dee1e9",
   "header-column-separator": "#ffffffd6",
   "even-row-bg": "#F4F4F2",
+  "odd-row-bg": "#FFF",
   "row-hover": "#E8E8E8",
   "body-column-separator": "#bbbfcad6",
   "scrollbar-track-bg": "#ededed",

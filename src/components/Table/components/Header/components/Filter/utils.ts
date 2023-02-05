@@ -8,7 +8,7 @@ import {
 import { sortingHandler } from "../../../Head/components/Element/utils";
 import { handleSearchResults } from "../Search/utils";
 
-interface IProps {
+interface IHandleUpdateSelectedFilterProps {
   e: React.MouseEvent<HTMLDivElement>;
   filters: IAppState["filters"];
   state: "filter" | "option";
@@ -23,20 +23,40 @@ interface IProps {
 export const handleUpdateSelectedFilter = ({
   e,
   selectedFilter,
+  state,
+  ...props
+}: IHandleUpdateSelectedFilterProps) => {
+  e.stopPropagation();
+  const value = (e.target as HTMLDivElement).accessKey;
+  let latestFilterValues = { ...selectedFilter, [state]: value };
+  if (state === "filter") latestFilterValues["option"] = "default";
+  handleResetingSelectedFilter({
+    ...props,
+    latestFilterValues,
+  });
+};
+
+interface updateUtilProps {
+  latestFilterValues: IAppState["selectedFilter"];
+  filters: IAppState["filters"];
+  search: IAppState["search"];
+  dispatch: React.Dispatch<IAction>;
+  original: IAppState["original"];
+  searchAccessors: IAppState["searchAccessors"];
+  results: IAppState["results"];
+  selectedSort: IAppState["selectedSort"];
+}
+
+export const handleResetingSelectedFilter = ({
   dispatch,
   original,
-  state,
+  latestFilterValues,
   filters,
   search,
   searchAccessors,
   results,
   selectedSort,
-}: IProps) => {
-  e.stopPropagation();
-  const value = (e.target as HTMLDivElement).accessKey;
-  let latestFilterValues = { ...selectedFilter, [state]: value };
-  if (state === "filter") latestFilterValues["option"] = "default";
-
+}: updateUtilProps) => {
   const filterEnabled =
     latestFilterValues.filter !== "default" &&
     latestFilterValues.option !== "default";
@@ -65,7 +85,7 @@ export const handleUpdateSelectedFilter = ({
       newCurrentRows = cachedRows;
     } else {
       let newFilteredResults = original.filter((row) => {
-        let accessor = filters[selectedFilter.filter].accessor;
+        let accessor = filters[latestFilterValues.filter].accessor;
         let value: string | number = "";
         if (!accessor) return;
         value = typeof accessor === "string" ? row[accessor] : accessor(row);
@@ -81,10 +101,6 @@ export const handleUpdateSelectedFilter = ({
           "original",
           "rows",
         ],
-      });
-      dispatch({
-        type: ActionTypes.UPDATE_RESULTS,
-        payload: newResultsObject,
       });
     }
   } else {
@@ -109,6 +125,10 @@ export const handleUpdateSelectedFilter = ({
       dispatch,
     });
   } else {
+    dispatch({
+      type: ActionTypes.UPDATE_RESULTS,
+      payload: newResultsObject,
+    });
     dispatch({
       type: ActionTypes.SET_CURRENT_ROWS,
       payload: newCurrentRows,

@@ -43,7 +43,6 @@ export const handleSearchResults = ({
   });
 
   if (existingSearchResults) {
-    console.log("returning cached rows", existingSearchResults);
     if (sortEnabled)
       sortingHandler({
         selectedSort,
@@ -91,16 +90,12 @@ export const handleSearchResults = ({
       }
     }
   });
+
   //updating new search results
   let updatedResults = updateObject({
     object: results,
     keys: keys,
     newValue: newResults,
-  });
-  //updating context
-  dispatch({
-    type: ActionTypes.UPDATE_RESULTS,
-    payload: updatedResults,
   });
 
   if (sortEnabled)
@@ -111,9 +106,15 @@ export const handleSearchResults = ({
       search,
       dispatch,
     });
-  else
+  else {
     dispatch({
       type: ActionTypes.SET_CURRENT_ROWS,
       payload: newResults,
     });
+    //updating context
+    dispatch({
+      type: ActionTypes.UPDATE_RESULTS,
+      payload: updatedResults,
+    });
+  }
 };

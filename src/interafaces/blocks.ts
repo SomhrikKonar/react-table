@@ -11,6 +11,9 @@ export interface ITable {
   handleRowSelection?: (rows: TData[]) => void;
   handleRowClick?: (row: TData) => void;
   styleVariables?: TStyleVariables;
+  fixedTableHeight?: boolean;
+  loading?: boolean;
+  loadingComponent?: React.ReactNode;
 }
 
 export type ITableView = Partial<ITable>;
@@ -22,6 +25,10 @@ export interface IPagination {
   ) => void;
   goToNextPage: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   goToLastPage: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
+
+export interface IBodyProps {
+  tableContainerRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 export interface IRow {

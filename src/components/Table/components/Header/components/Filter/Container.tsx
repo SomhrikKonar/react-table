@@ -3,7 +3,10 @@ import { TFilters } from "../../../../../../interafaces/units";
 import { ActionTypes } from "../../../../../../store/actions";
 import { useStore } from "../../../../../../store/store";
 import { accessKeys } from "../../../../utils/accessKey";
-import { handleUpdateSelectedFilter } from "./utils";
+import {
+  handleResetingSelectedFilter,
+  handleUpdateSelectedFilter,
+} from "./utils";
 import View from "./View";
 
 export const Container = () => {
@@ -34,7 +37,10 @@ export const Container = () => {
     original.forEach((row) => {
       Object.entries(filters).forEach(([key, value]) => {
         if (!value.accessor) return;
-        let optionValue = accessKeys({ accessor: value.accessor, data: row });
+        let optionValue = accessKeys({
+          accessor: value.accessor,
+          data: row,
+        }).toString();
         if (optionValue !== "--") {
           filters[key].options.add(optionValue);
         }
@@ -45,13 +51,40 @@ export const Container = () => {
         delete filters[key];
       }
     });
-    dispatch({ type: ActionTypes.SET_FILTERS, payload: filters });
-  }, [columns, original]);
 
-  useEffect(() => {
-    let newObj = { default: { default: { original: { rows: original } } } };
-    dispatch({ type: ActionTypes.UPDATE_RESULTS, payload: newObj });
-  }, [original]);
+    dispatch({ type: ActionTypes.SET_FILTERS, payload: filters });
+
+    //new Selected filter/option
+    let latestFilterValues = { ...selectedFilter };
+    if (filters[latestFilterValues.filter]) {
+      if (
+        !filters[latestFilterValues.filter].options.has(
+          latestFilterValues.option
+        )
+      ) {
+        latestFilterValues["option"] = "default";
+      }
+    } else {
+      latestFilterValues = { filter: "default", option: "default" };
+    }
+
+    //resetting results
+    let newObj = {
+      default: { default: { original: { rows: original, sortedResults: {} } } },
+    };
+
+    //updating current results
+    handleResetingSelectedFilter({
+      latestFilterValues,
+      dispatch,
+      original,
+      filters,
+      search,
+      searchAccessors,
+      results: { ...newObj },
+      selectedSort,
+    });
+  }, [columns, original]);
 
   const updateSelectedFilter =
     (state: "filter" | "option") => (e: React.MouseEvent<HTMLDivElement>) => {

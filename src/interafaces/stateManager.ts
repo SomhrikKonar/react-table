@@ -44,6 +44,9 @@ export interface IAppState {
     };
   };
   stylesheet: TStyleVariables;
+  fixedTableHeight: boolean;
+  loading: boolean;
+  loadingComponent?: React.ReactNode;
 }
 
 export interface IDefaultProps {
@@ -55,6 +58,10 @@ export interface IDefaultProps {
   usePagination?: boolean;
   searchPlaceholder?: string;
   canSelectRows?: boolean;
+  loading?: boolean;
+  loadingComponent?: React.ReactNode;
+  styleVariables?: TStyleVariables;
+  fixedTableHeight?: boolean;
 }
 
 export type TAppContext = [IAppState, Dispatch<IAction>];
