@@ -1,5 +1,4 @@
 node_modules
-dist
-react-table-1.0.0.tgz
+dist/
 classnames.txt
-package-lock.json
+react-table-1.0.0.tgz
