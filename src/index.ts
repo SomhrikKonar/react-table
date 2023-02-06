@@ -1,1 +1,2 @@
-export { Table as default } from "./components";
+import { Table } from "./components";
+export default Table;
