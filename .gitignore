@@ -2,3 +2,4 @@ node_modules
 dist
 react-table-1.0.0.tgz
 classnames.txt
+package-lock.json
