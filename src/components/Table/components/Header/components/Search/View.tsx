@@ -6,7 +6,7 @@ import icon from "../../../../../../assests/Search.svg";
 const View: React.FC<ISearch> = ({ search, handleSearch }) => {
   const [{ searchPlaceholder }] = useStore();
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} tableSearchbar`}>
       <img src={icon} alt="search" />
       <input
         type="text"

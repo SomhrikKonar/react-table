@@ -4,7 +4,7 @@ import Search from "./components/Search";
 import styles from "./styles.module.css";
 const View = () => {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} tableHeaderContainer`}>
       <Search />
       <Filter />
     </div>

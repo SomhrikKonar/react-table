@@ -28,20 +28,20 @@ const View: React.FC<IPagination> = ({
   const currentPageNumber = current.length > 0 ? pageNumber : 0;
 
   return (
-    <div className={styles.container}>
-      <p className={styles.description}>
+    <div className={`${styles.container} tablePaginationContainer`}>
+      <p className={`${styles.description} tablePaginationDescription`}>
         Showing {minEntryNumber} to {maxEntryNumber} of {current.length} entries
       </p>
       <div className={styles.btnsContainer}>
         <button
-          className={styles.btn}
+          className={`${styles.btn} tablePaginationButtons`}
           onClick={goToFirstPage}
           disabled={pageNumber === 1 || loading || current.length <= 0}
         >
           {"<<"}
         </button>
         <button
-          className={styles.btn}
+          className={`${styles.btn} tablePaginationButtons`}
           onClick={goToPreviousPage}
           disabled={pageNumber === 1 || loading || current.length <= 0}
         >
@@ -51,7 +51,7 @@ const View: React.FC<IPagination> = ({
           {currentPageNumber}/{maxPageNumber}
         </div>
         <button
-          className={styles.btn}
+          className={`${styles.btn} tablePaginationButtons`}
           onClick={goToNextPage}
           disabled={
             pageNumber === maxPageNumber || loading || current.length <= 0
@@ -60,7 +60,7 @@ const View: React.FC<IPagination> = ({
           {">"}
         </button>
         <button
-          className={styles.btn}
+          className={`${styles.btn} tablePaginationButtons`}
           onClick={goToLastPage}
           disabled={
             pageNumber === maxPageNumber || loading || current.length <= 0

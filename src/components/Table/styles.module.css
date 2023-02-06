@@ -1,6 +1,6 @@
 *{
     box-sizing: border-box;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 /*Top Wrapper*/
 .container{
@@ -27,7 +27,7 @@
 }
 
 /*Table head*/
-.table>thead{
+.table thead{
     position: sticky;
     top: 0;
     background-color: var(--header-bg);
@@ -51,15 +51,15 @@
 }
 
 /*Zebra Stripes*/
-.table>tbody tr:nth-child(even) {
+.table tbody tr:nth-child(even) {
     background-color: var(--even-row-bg);
 }
-.table>tbody tr:nth-child(odd) {
+.table tbody tr:nth-child(odd) {
     background-color: var(--odd-row-bg);
 }
 
 /* Row Hover*/
-.table>tbody>tr:hover {
+.table tbody tr:hover {
     background-color: var(--row-hover);
 }
 
@@ -68,7 +68,7 @@
     height: 50px;
     position: relative;
 }
-.emptyBody>.emptyBodyMessage{
+.emptyBody .emptyBodyMessage{
     font-size: 16px;
     font-weight: 600;
     color: var(--body-font-color);
@@ -84,21 +84,21 @@
 }
 
 /*Text alignment, padding*/
-.table>tbody>tr>td,
-.table>thead>tr>th{
+.table tbody tr td,
+.table thead tr th{
     text-align: center;
     padding: 5px 10px;
 }
 
 /*Column separating lines*/
-.table>tbody>tr>td{
+.table tbody tr td{
     border-right: 2px solid var(--body-column-separator);
 }
-.table>thead>tr>th {
+.table thead tr th {
     border-right: 2px solid var(--header-column-separator);
 }
-.table>tbody>tr>td:last-child,
-.table>thead>tr>th:last-child {
+.table tbody tr td:last-child,
+.table thead tr th:last-child {
     border-right: 0;
 }
 

@@ -121,17 +121,19 @@ const View: React.FC<ITableView> = ({
 
   const MemoisedContent = React.useMemo(
     () => (
-      <div className={styles.container}>
+      <div className={`${styles.container} tableParentContainer`}>
         {
           <>
             <Header />
             <div
               className={`${styles["tableContainer"]} ${
-                fixedTableHeight ? styles["fixedTableContainer"] : ""
-              }`}
+                fixedTableHeight
+                  ? styles["fixedTableContainer"] + " fixedTableContainer"
+                  : ""
+              } tableContainer`}
               ref={tableRef}
             >
-              <table className={styles.table}>
+              <table className={`${styles.table} table`}>
                 <Head />
                 <Body tableContainerRef={tableRef} />
               </table>

@@ -145,7 +145,7 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
               )
           )}
           {dummyRows.map((_, index) => (
-            <tr className={styles["emptyRows"]} key={index}>
+            <tr className={`${styles["emptyRows"]} emptyTableRows`} key={index}>
               {columns.map(({ name }) => (
                 <td key={name}></td>
               ))}
@@ -154,7 +154,7 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
         </>
       ) : loading ? (
         <tr
-          className={styles.emptyBody}
+          className={`${styles.emptyBody} emptyTableBody`}
           style={{
             height: noRowAlertContainerHeight,
           }}
@@ -166,18 +166,20 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
           ) : (
             ""
           )}
-          <td className={styles.emptyBodyMessage}>
+          <td className={`${styles.emptyBodyMessage} emptyTableBodyMessage`}>
             {loadingComponent || "Loading ..."}
           </td>
         </tr>
       ) : (
         <tr
-          className={styles.emptyBody}
+          className={`${styles.emptyBody} emptyTableBody`}
           style={{
             height: noRowAlertContainerHeight,
           }}
         >
-          <td className={styles.emptyBodyMessage}>No Rows Found</td>
+          <td className={`${styles.emptyBodyMessage} emptyTableBodyMessage`}>
+            No Rows Found
+          </td>
         </tr>
       )}
     </tbody>
