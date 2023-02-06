@@ -1,6 +1,6 @@
 {
   "name": "react-condensed",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A customizable react component to build tables easily.",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
