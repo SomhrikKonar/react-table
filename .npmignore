@@ -4,3 +4,4 @@ rollup.config.js
 tsconfig.json
 classnames.txt
 react-table-1.0.0.tgz
+dist/lib
