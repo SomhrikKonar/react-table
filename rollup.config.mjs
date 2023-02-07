@@ -6,6 +6,7 @@ import typescript from "@rollup/plugin-typescript";
 import { terser } from "rollup-plugin-terser";
 import url from "@rollup/plugin-url";
 import svgr from "@svgr/rollup";
+import dts from "rollup-plugin-dts";
 export default [
   {
     input: "./src/index.ts",
@@ -13,10 +14,12 @@ export default [
       {
         file: "dist/index.js",
         format: "cjs",
+        exports: "named",
       },
       {
         file: "dist/index.es.js",
         format: "es",
+        exports: "named",
       },
     ],
     plugins: [
@@ -29,8 +32,19 @@ export default [
       }),
       external(),
       resolve(),
-      typescript(),
-      terser(),
+      typescript({ declaration: true, tsconfig: "./tsconfig.json" }),
+      terser({ compress: true }),
     ],
+  },
+  {
+    input: "dist/types/components/index.d.ts",
+    output: [
+      {
+        file: "dist/index.d.ts",
+        format: "esm",
+      },
+    ],
+    plugins: [dts()],
+    external: [/\.css$/],
   },
 ];
