@@ -165,37 +165,37 @@ export default App;
       <td>handleRowSelection</td>
       <td>function</td>
       <td>--</td>
-      <td>Provide a callback fuction, which will be called everytime number of selected rows change. Will receive array containing row details as argument.<td>
+      <td>Provide a callback fuction, which will be called everytime number of selected rows change. Will receive array containing row details as argument.</td>
     </tr>
      <tr>
       <td>handleRowClick</td>
       <td>function</td>
       <td>--</td>
-      <td>Provide a callback fuction, which will be called everytime a row is clicked. Will receive details of the row as argument.<td>
+      <td>Provide a callback fuction, which will be called everytime a row is clicked. Will receive details of the row as argument.</td>
     </tr>
      <tr>
       <td>styleVariables</td>
       <td>object</td>
       <td>all default values are defined below</td>
-      <td>Modify css variables to change font-family, color, font-size, etc.<td>
+      <td>Modify css variables to change font-family, color, font-size, etc.</td>
     </tr>    
      <tr>
       <td>fixedTableHeight</td>
       <td>boolean</td>
       <td>false</td>
-      <td>If true the table will have constant height, incase number rows fail to fill the table height empty rows will fill the rest of the table.<td>
+      <td>If true the table will have constant height, incase number rows fail to fill the table height empty rows will fill the rest of the table.</td>
     </tr>
      <tr>
       <td>loading</td>
       <td>boolean</td>
       <td>false</td>
-      <td>If true loading screen will be shown, all row data will be hidden even if they exists.<td>
+      <td>If true loading screen will be shown, all row data will be hidden even if they exists.</td>
     </tr>
     <tr>
       <td>loadingComponent</td>
       <td>React Component</td>
       <td>"Loading ..."</td>
-      <td>If provided it will displayed in the center of the table's body, when loading is true.<td>
+      <td>If provided it will displayed in the center of the table's body, when loading is true.</td>
     </tr>
   </tbody>
 </table>
