@@ -96,10 +96,11 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
       return [];
     }
     const overflowHidden =
-      tableContainerRef.current.style.getPropertyValue("overflow") === "hidden";
+      tableContainerRef.current.style.getPropertyValue("overflow-y") ===
+      "hidden";
 
     if (!containerHeight || !fixedTableHeight) {
-      if (overflowHidden) tableContainerRef.current.style.overflow = "auto";
+      if (overflowHidden) tableContainerRef.current.style.overflowY = "auto";
       return [];
     }
 
@@ -112,11 +113,11 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
     const numberOfRows = Math.ceil(containerHeight / parseInt(bodyRowHeight));
 
     if (current.length < numberOfRows) {
-      if (!overflowHidden) tableContainerRef.current.style.overflow = "hidden";
+      if (!overflowHidden) tableContainerRef.current.style.overflowY = "hidden";
       return Array(numberOfRows - current.length).fill(null);
     }
 
-    if (overflowHidden) tableContainerRef.current.style.overflow = "auto";
+    if (overflowHidden) tableContainerRef.current.style.overflowY = "auto";
     return [];
   }, [
     containerHeight,
