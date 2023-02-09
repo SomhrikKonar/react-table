@@ -47,6 +47,7 @@ export interface IHeadElement {
   sortType: "string" | "number" | "date";
   name: string;
   accessor: TColumn["accessor"];
+  alignment: TColumn["alignment"];
 }
 
 export interface IFilter {

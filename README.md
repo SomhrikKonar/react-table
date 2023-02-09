@@ -312,6 +312,15 @@ export default App;
         Provide minimum width you want the cell to take up.
       </td>
     </tr>
+    <tr>
+      <td>alignment</td>
+      <td>css property</td>
+      <td>false</td>
+      <td>center</td>
+      <td>
+        Responsible for aligning the contents inside table cell.
+      </td>
+    </tr>
    </tbody>
   </table>
 

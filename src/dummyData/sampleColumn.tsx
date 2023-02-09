@@ -16,6 +16,7 @@ export const Columns: TColumn[] = [
     sortable: true,
     sortType: "string",
     minWidth: "200px",
+    alignment: "left",
   },
   {
     name: "age",

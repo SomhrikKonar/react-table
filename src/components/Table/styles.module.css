@@ -62,6 +62,9 @@
 .table tbody tr:hover {
     background-color: var(--row-hover);
 }
+.clickableRows tr{
+    cursor: pointer;
+}
 
 /* No Row Found Container */
 .emptyBody{
@@ -87,7 +90,7 @@
 .table tbody tr td,
 .table thead tr th{
     text-align: center;
-    padding: 5px 10px;
+    padding: 5px 15px;
 }
 
 /*Column separating lines*/
@@ -110,7 +113,10 @@
     height: auto;
 }
 .disableScrollTableContainer{
-    overflow: hidden;
+    overflow-y: hidden;
+}
+.emptyRows{
+    cursor: auto !important;
 }
 .emptyRows:nth-child(even):hover{
     background-color: var(--even-row-bg);

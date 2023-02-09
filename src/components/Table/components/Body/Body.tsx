@@ -132,7 +132,10 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
   }, [containerHeight, fixedTableHeight]);
 
   return (
-    <tbody onClick={handleClick}>
+    <tbody
+      className={handleRowClick ? styles.clickableRows : ""}
+      onClick={handleClick}
+    >
       {current.length > 0 && !loading ? (
         <>
           {current.map(

@@ -23,8 +23,15 @@ const Element: React.FC<IElement> = ({ data, column, index }) => {
     return str + " " + index;
   }, [column.name, index, column.preventClick]);
 
+  const inlineStyles = React.useMemo(() => {
+    let styles: React.CSSProperties = {};
+    if (column.minWidth) styles["minWidth"] = column.minWidth;
+    if (column.alignment) styles["textAlign"] = column.alignment;
+    return styles;
+  }, [column.minWidth, column.alignment]);
+
   return (
-    <td style={{ minWidth: column.minWidth || "auto" }} accessKey={accessKey}>
+    <td style={inlineStyles} accessKey={accessKey}>
       {detail}
     </td>
   );

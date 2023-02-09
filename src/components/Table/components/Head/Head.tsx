@@ -8,7 +8,15 @@ const Head: React.FC = () => {
     <thead>
       <tr>
         {columns.map(
-          ({ name, hideHeader, headerCell, sortable, sortType, accessor }) =>
+          ({
+            name,
+            hideHeader,
+            headerCell,
+            sortable,
+            sortType,
+            accessor,
+            alignment,
+          }) =>
             sortable && accessor ? (
               <Element
                 content={
@@ -18,6 +26,7 @@ const Head: React.FC = () => {
                 name={name}
                 key={name}
                 accessor={accessor}
+                alignment={alignment}
               />
             ) : (
               <th key={name}>

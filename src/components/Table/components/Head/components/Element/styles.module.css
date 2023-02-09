@@ -3,17 +3,17 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    padding-inline: 20px;
-    margin: auto;
     width: fit-content;
 }
 .headElementContainer>p{
     margin: 0;
     width: fit-content;
+    white-space: nowrap;
 }
 .headElementContainer>button{
-    position: absolute;
-    right: 0;
+    /* position: absolute;
+    right: 0; */
+    margin-left: 8px;
     height: 12px;
     width: 12px;
     overflow: hidden;

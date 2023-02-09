@@ -12,6 +12,7 @@ const Element: React.FC<IHeadElement> = ({
   name,
   accessor,
   sortType,
+  alignment,
 }) => {
   const [{ selectedSort, results, selectedFilter, search }, dispatch] =
     useStore();
@@ -48,14 +49,20 @@ const Element: React.FC<IHeadElement> = ({
     });
   };
 
+  const inlineStyles = React.useMemo(() => {
+    let styles: React.CSSProperties = {};
+    if (alignment) styles["textAlign"] = alignment;
+    return styles;
+  }, [alignment]);
+
   return (
-    <th>
-      <div className={styles.headElementContainer}>
+    <th style={inlineStyles}>
+      <p className={styles.headElementContainer}>
         <p>{content}</p>
         <button onClick={handleOnClick}>
           <img src={icon} alt="sort-icon" height={"12px"} />
         </button>
-      </div>
+      </p>
     </th>
   );
 };
