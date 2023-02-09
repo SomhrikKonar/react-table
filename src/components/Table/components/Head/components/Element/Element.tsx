@@ -49,14 +49,14 @@ const Element: React.FC<IHeadElement> = ({
     });
   };
 
-  const inlineStyles = React.useMemo(() => {
-    let styles: React.CSSProperties = {};
-    if (alignment) styles["textAlign"] = alignment;
-    return styles;
+  const alignmentClassname = React.useMemo(() => {
+    let name: string = "centerAligned";
+    if (alignment) name = alignment + "Aligned";
+    return name;
   }, [alignment]);
 
   return (
-    <th style={inlineStyles}>
+    <th className={styles[alignmentClassname]}>
       <p className={styles.headElementContainer}>
         <p>{content}</p>
         <button onClick={handleOnClick}>

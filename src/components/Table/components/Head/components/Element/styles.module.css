@@ -1,9 +1,16 @@
 .headElementContainer{
     display: flex;
     align-items: center;
-    justify-content: center;
     position: relative;
-    width: fit-content;
+}
+.centerAligned .headElementContainer{
+    justify-content: center;
+}
+.leftAligned .headElementContainer {
+    justify-content: flex-start;
+}
+.rightAligned .headElementContainer {
+    justify-content: flex-end;
 }
 .headElementContainer>p{
     margin: 0;
