@@ -1,6 +1,7 @@
 import { IAction, IAppState } from "../../../../../../interafaces/stateManager";
 import { TData } from "../../../../../../interafaces/units";
 import { ActionTypes } from "../../../../../../store/actions";
+import { accessKeys } from "../../../../utils/accessKey";
 import {
   destructureObject,
   updateObject,
@@ -88,7 +89,10 @@ export const handleResetingSelectedFilter = ({
         let accessor = filters[latestFilterValues.filter].accessor;
         let value: string | number = "";
         if (!accessor) return;
-        value = typeof accessor === "string" ? row[accessor] : accessor(row);
+        value =
+          typeof accessor === "string"
+            ? accessKeys({ accessor, data: row })
+            : accessor(row);
         if (value.toString() === latestFilterValues.option) return row;
       });
       newCurrentRows = newFilteredResults;

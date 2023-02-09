@@ -1,5 +1,6 @@
 import { IAction, IAppState } from "../../../../../../interafaces/stateManager";
 import { ActionTypes } from "../../../../../../store/actions";
+import { accessKeys } from "../../../../utils/accessKey";
 import {
   destructureObject,
   updateObject,
@@ -79,7 +80,7 @@ export const handleSearchResults = ({
       let value = "";
       //got value
       if (typeof accessor === "function") value = accessor(row);
-      else value = row[accessor];
+      else value = accessKeys({ accessor, data: row }).toString();
       //converting text to lowercase
       value = value.toString().toLowerCase().trim();
       // setting up regex
