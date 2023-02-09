@@ -10,6 +10,9 @@ const Element: React.FC<IElement> = ({ data, column, index }) => {
   const detail = React.useMemo(callHandleTableElement, [data, column, index]);
 
   const accessKey = React.useMemo(() => {
+    if (column.preventClick) {
+      return "PreventClick" + " " + index;
+    }
     let str = column.name;
     if (str.indexOf(" ") !== -1) {
       str = "";
@@ -18,7 +21,7 @@ const Element: React.FC<IElement> = ({ data, column, index }) => {
       }
     }
     return str + " " + index;
-  }, [column.name, index]);
+  }, [column.name, index, column.preventClick]);
 
   return (
     <td style={{ minWidth: column.minWidth || "auto" }} accessKey={accessKey}>

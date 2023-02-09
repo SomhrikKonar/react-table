@@ -4,6 +4,7 @@ export const Columns: TColumn[] = [
   {
     name: "Id",
     accessor: "id",
+    preventClick: true,
   },
   {
     name: "Name",

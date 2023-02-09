@@ -259,6 +259,15 @@ export default App;
       </td>
     </tr>
     <tr>
+      <td>preventClick</td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>false</td>
+      <td>
+       If true, clicking on this won't trigger the handleRowClick callback
+      </td>
+    </tr>
+    <tr>
       <td>searchable</td>
       <td>boolean</td>
       <td>false</td>

@@ -53,7 +53,7 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
       let accessKey = currentTarget.accessKey;
       let [name, index] = accessKey.split(" ");
       if (!name || !index) return;
-      if (name === "SelectRow") return;
+      if (name === "SelectRow" || name === "PreventClick") return;
       let parsedIndex = parseInt(index);
       handleRowClick(current[parsedIndex]);
     },

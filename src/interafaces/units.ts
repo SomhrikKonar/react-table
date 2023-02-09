@@ -9,6 +9,7 @@ export type TColumn = {
   sortType?: "string" | "number" | "date";
   headerCell?: (rows: TData[]) => JSX.Element;
   minWidth?: React.CSSProperties["minWidth"];
+  preventClick?: boolean;
 };
 
 export type TData = { [key: string]: any };
