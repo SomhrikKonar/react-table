@@ -27,7 +27,7 @@ const compareFunction = (
   let newA = a;
   let newB = b;
   if (elementType === "object") {
-    if (!accessor) return 0;
+    if (accessor === undefined) return 0;
     newA = typeof accessor === "function" ? accessor(a) : a[accessor];
     newB = typeof accessor === "function" ? accessor(b) : b[accessor];
   }
@@ -40,11 +40,14 @@ const compareFunction = (
     newB = new Date(newB);
   }
   //sorting by order
-  if (!newA && !newB) {
+  if (
+    (newA === undefined || newA === null) &&
+    (newB === undefined || newB === null)
+  ) {
     return 0;
-  } else if (!newA) {
+  } else if (newA === undefined || newA === null) {
     return -1;
-  } else if (!newB) {
+  } else if (newB === undefined || newB === null) {
     return 1;
   }
 

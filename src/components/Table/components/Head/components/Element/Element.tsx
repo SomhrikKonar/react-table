@@ -57,12 +57,12 @@ const Element: React.FC<IHeadElement> = ({
 
   return (
     <th className={styles[alignmentClassname]}>
-      <p className={styles.headElementContainer}>
+      <div className={styles.headElementContainer}>
         <p>{content}</p>
         <button onClick={handleOnClick}>
           <img src={icon} alt="sort-icon" height={"12px"} />
         </button>
-      </p>
+      </div>
     </th>
   );
 };
