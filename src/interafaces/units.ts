@@ -11,6 +11,7 @@ export type TColumn = {
   minWidth?: React.CSSProperties["minWidth"];
   preventClick?: boolean;
   alignment?: "left" | "right" | "center";
+  wrapCellContent?: boolean;
 };
 
 export type TData = { [key: string]: any };

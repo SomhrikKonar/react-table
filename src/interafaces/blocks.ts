@@ -47,7 +47,8 @@ export interface IHeadElement {
   sortType: "string" | "number" | "date";
   name: string;
   accessor: TColumn["accessor"];
-  alignment: TColumn["alignment"];
+  alignmentClassname: string;
+  minWidth: React.CSSProperties["minWidth"];
 }
 
 export interface IFilter {

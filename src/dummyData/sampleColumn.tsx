@@ -16,7 +16,7 @@ export const Columns: TColumn[] = [
     sortable: true,
     sortType: "string",
     minWidth: "200px",
-    alignment: "left",
+    alignment: "right",
   },
   {
     name: "age",
@@ -30,9 +30,9 @@ export const Columns: TColumn[] = [
     name: "Birth Date",
     sortable: true,
     sortType: "date",
-    accessor: "birthDate",
+    accessor: (row: any) => row["birthDate"],
     cell: (row: any) => {
-      return <div>{row.birthDate}</div>;
+      return <div>{row.birthDate || "--"}</div>;
     },
   },
   {
@@ -51,6 +51,7 @@ export const Columns: TColumn[] = [
     name: "University",
     accessor: "university",
     filter: true,
+    wrapCellContent: false,
   },
   {
     name: "Company Name",

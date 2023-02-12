@@ -21,11 +21,30 @@ const View: React.FC<IPagination> = ({
 
   let minEntryNumber: number = minEntryIndex + 1;
   let maxEntryNumber: number = maxEntryIndex + 1;
-  if (minEntryNumber > current.length) minEntryNumber = current.length;
-  if (maxEntryNumber > current.length) maxEntryNumber = current.length;
 
-  const maxPageNumber: number = Math.ceil(current.length / numberOfRows);
-  const currentPageNumber = current.length > 0 ? pageNumber : 0;
+  minEntryNumber =
+    loading || current.length <= 0
+      ? 0
+      : minEntryNumber > current.length
+      ? current.length
+      : minEntryNumber;
+
+  maxEntryNumber =
+    loading || current.length <= 0
+      ? 0
+      : maxEntryNumber > current.length
+      ? current.length
+      : maxEntryNumber;
+
+  const maxPageNumber: number =
+    loading || current.length <= 0
+      ? 0
+      : Math.ceil(current.length / numberOfRows);
+
+  const currentPageNumber =
+    loading || current.length <= 0 ? 0 : current.length > 0 ? pageNumber : 0;
+
+  const totalEntries = loading || current.length <= 0 ? 0 : current.length;
 
   return (
     <div className={`${styles.container} tablePaginationContainer`}>

@@ -321,6 +321,15 @@ export default App;
         Responsible for aligning the contents inside table cell.
       </td>
     </tr>
+    <tr>
+      <td>wrapCellContent</td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>true</td>
+      <td>
+        Set white-space to no-wrap for table-cells by passing true
+      </td>
+    </tr>
    </tbody>
   </table>
 

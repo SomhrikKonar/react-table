@@ -1,4 +1,5 @@
 import { TColumn } from "../../../interafaces/units";
+import { accessKeys } from "./accessKey";
 
 interface props {
   sortType: "string" | "number" | "date";
@@ -28,9 +29,16 @@ const compareFunction = (
   let newB = b;
   if (elementType === "object") {
     if (accessor === undefined) return 0;
-    newA = typeof accessor === "function" ? accessor(a) : a[accessor];
-    newB = typeof accessor === "function" ? accessor(b) : b[accessor];
+    newA =
+      typeof accessor === "function"
+        ? accessor(a)
+        : accessKeys({ accessor, data: a });
+    newB =
+      typeof accessor === "function"
+        ? accessor(b)
+        : accessKeys({ accessor, data: b });
   }
+
   //changes if sortType is string||date
   if (sortType === "string") {
     newA = typeof newA === "string" ? newA.toLowerCase() : undefined;
@@ -39,16 +47,20 @@ const compareFunction = (
     newA = new Date(newA);
     newB = new Date(newB);
   }
+
   //sorting by order
   if (
-    (newA === undefined || newA === null) &&
-    (newB === undefined || newB === null)
+    newA === undefined ||
+    newA === null ||
+    (sortType === "date" && !newA?.getTime())
   ) {
-    return 0;
-  } else if (newA === undefined || newA === null) {
-    return -1;
-  } else if (newB === undefined || newB === null) {
     return 1;
+  } else if (
+    newB === undefined ||
+    newB === null ||
+    (sortType === "date" && !newB?.getTime())
+  ) {
+    return -1;
   }
 
   let toReturn: number = 0;
@@ -59,6 +71,7 @@ const compareFunction = (
   } else {
     toReturn = 0;
   }
+
   if (order === "descending") {
     toReturn *= -1;
   }

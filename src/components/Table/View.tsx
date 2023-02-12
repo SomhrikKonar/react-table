@@ -40,6 +40,12 @@ const View: React.FC<ITableView> = ({
     Object.entries(newStyleVariables).map(([k, v]) => {
       document.documentElement.style.setProperty(`--${k}`, v);
     });
+    dispatch({
+      type: ActionTypes.UPDATE_PROPS,
+      payload: {
+        stylesheet: newStyleVariables,
+      },
+    });
   }, [styleVariables]);
 
   React.useEffect(() => {
@@ -114,10 +120,18 @@ const View: React.FC<ITableView> = ({
   }, [canSelectRows]);
 
   React.useEffect(() => {
+    if (!mounted) return;
     if (tableRef.current) {
       tableRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     }
-  }, [pageNumber, current]);
+  }, [pageNumber]);
+
+  React.useEffect(() => {
+    if (!mounted) return;
+    if (tableRef.current) {
+      tableRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [current]);
 
   const MemoisedContent = React.useMemo(
     () => (

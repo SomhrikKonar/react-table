@@ -26,7 +26,7 @@ export const accessKeys = ({
         }
       }
     } else if (typeof accessor === "function") {
-      value = accessor(data);
+      value = accessor(data) || "--";
     }
   return value;
 };

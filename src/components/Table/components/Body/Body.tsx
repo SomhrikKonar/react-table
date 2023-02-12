@@ -4,6 +4,7 @@ import { useStore } from "../../../../store/store";
 import { Row } from "./Components/Rows";
 import styles from "../../styles.module.css";
 import { IBodyProps } from "../../../../interafaces/blocks";
+import { ActionTypes } from "../../../../store/actions";
 
 const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
   const [
@@ -14,15 +15,54 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
       maxEntryIndex,
       minEntryIndex,
       usePagination,
+      pageNumber,
       handleRowClick,
       stylesheet,
       fixedTableHeight,
       loading,
       loadingComponent,
+      numberOfRows,
     },
+    dispatch,
   ] = useStore();
 
   const [containerHeight, setContainerHeight] = React.useState<number>(0);
+
+  React.useEffect(() => {
+    if (tableContainerRef.current) {
+      const table_head_row_height =
+        tableContainerRef.current.children[0].children[0].clientHeight + "px";
+
+      document.documentElement.style.setProperty(
+        "head-row-height",
+        table_head_row_height
+      );
+
+      const tr =
+        tableContainerRef.current.children[0].children[1].querySelector("tr");
+      const table_body_row_height = !!tr
+        ? tr.clientHeight + "px"
+        : stylesheet["body-row-height"] || "auto";
+
+      document.documentElement.style.setProperty(
+        "head-row-height",
+        table_body_row_height
+      );
+
+      if (
+        table_head_row_height !== stylesheet["head-row-height"] ||
+        table_body_row_height !== stylesheet["body-row-height"]
+      ) {
+        let variables = { ...stylesheet };
+        variables["head-row-height"] = table_head_row_height;
+        variables["body-row-height"] = table_body_row_height;
+        dispatch({
+          type: ActionTypes.UPDATE_PROPS,
+          payload: { stylesheet: variables },
+        });
+      }
+    }
+  }, []);
 
   const handleKey = React.useCallback(
     (row: TData, index: number) => {
@@ -63,14 +103,15 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
   React.useEffect(() => {
     if (!fixedTableHeight) return;
 
-    const headRowHeight = parseInt(
-      stylesheet["head-row-height"]?.substring(
-        0,
-        stylesheet["head-row-height"].length - 2
-      ) || "0"
-    );
+    let headRowHeight =
+      parseInt(
+        stylesheet["head-row-height"]?.substring(
+          0,
+          stylesheet["head-row-height"].length - 2
+        ) || "0"
+      ) + 1;
 
-    if (tableContainerRef.current && !containerHeight) {
+    if (tableContainerRef.current) {
       setContainerHeight(
         tableContainerRef.current.clientHeight - headRowHeight
       );
@@ -91,6 +132,16 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
     };
   }, [fixedTableHeight, stylesheet["head-row-height"]]);
 
+  const totalNumberOfRows = React.useMemo(() => {
+    const bodyRowHeight =
+      stylesheet["body-row-height"]?.substring(
+        0,
+        stylesheet["body-row-height"].length - 2
+      ) || "0";
+
+    return Math.ceil(containerHeight / parseInt(bodyRowHeight));
+  }, [stylesheet["body-row-height"], containerHeight]);
+
   const dummyRows = React.useMemo(() => {
     if (!tableContainerRef.current) {
       return [];
@@ -104,17 +155,15 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
       return [];
     }
 
-    const bodyRowHeight =
-      stylesheet["body-row-height"]?.substring(
-        0,
-        stylesheet["body-row-height"].length - 2
-      ) || "0";
+    const numberOfAvailableRows =
+      current.length - (pageNumber - 1) * numberOfRows;
 
-    const numberOfRows = Math.ceil(containerHeight / parseInt(bodyRowHeight));
-
-    if (current.length < numberOfRows) {
+    if (current.length <= 0 || loading) {
       if (!overflowHidden) tableContainerRef.current.style.overflowY = "hidden";
-      return Array(numberOfRows - current.length).fill(null);
+      return [];
+    } else if (numberOfAvailableRows < totalNumberOfRows) {
+      if (!overflowHidden) tableContainerRef.current.style.overflowY = "hidden";
+      return Array(totalNumberOfRows - numberOfAvailableRows).fill(null);
     }
 
     if (overflowHidden) tableContainerRef.current.style.overflowY = "auto";
@@ -124,7 +173,11 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
     stylesheet["body-row-height"],
     stylesheet["head-row-height"],
     current,
+    loading,
     fixedTableHeight,
+    pageNumber,
+    numberOfRows,
+    totalNumberOfRows,
   ]);
 
   const noRowAlertContainerHeight = React.useMemo(() => {

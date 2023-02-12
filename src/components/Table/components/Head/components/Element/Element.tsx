@@ -1,6 +1,6 @@
 import React from "react";
 import { IHeadElement } from "../../../../../../interafaces/blocks";
-import styles from "./styles.module.css";
+import styles from "../../styles.module.css";
 import sortIcon from "../../../../../../assests/Sort.svg";
 import ascendingSortIcon from "../../../../../../assests/AscendingSort.svg";
 import descendingSortIcon from "../../../../../../assests/DescendingSort.svg";
@@ -12,7 +12,8 @@ const Element: React.FC<IHeadElement> = ({
   name,
   accessor,
   sortType,
-  alignment,
+  alignmentClassname,
+  minWidth,
 }) => {
   const [{ selectedSort, results, selectedFilter, search }, dispatch] =
     useStore();
@@ -49,14 +50,8 @@ const Element: React.FC<IHeadElement> = ({
     });
   };
 
-  const alignmentClassname = React.useMemo(() => {
-    let name: string = "centerAligned";
-    if (alignment) name = alignment + "Aligned";
-    return name;
-  }, [alignment]);
-
   return (
-    <th className={styles[alignmentClassname]}>
+    <th className={styles[alignmentClassname]} style={{ minWidth }}>
       <div className={styles.headElementContainer}>
         <p>{content}</p>
         <button onClick={handleOnClick}>

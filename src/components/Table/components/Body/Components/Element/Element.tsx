@@ -27,8 +27,9 @@ const Element: React.FC<IElement> = ({ data, column, index }) => {
     let styles: React.CSSProperties = {};
     if (column.minWidth) styles["minWidth"] = column.minWidth;
     if (column.alignment) styles["textAlign"] = column.alignment;
+    if (column.wrapCellContent === false) styles["whiteSpace"] = "nowrap";
     return styles;
-  }, [column.minWidth, column.alignment]);
+  }, [column.minWidth, column.alignment, column.wrapCellContent]);
 
   return (
     <td style={inlineStyles} accessKey={accessKey}>

@@ -4,7 +4,7 @@
 }
 /*Top Wrapper*/
 .container{
-    height: 100%;
+    height: 90vh;
     display: flex;
     flex-direction: column;
 }
@@ -35,7 +35,7 @@
 
 /*Table header cells*/
 .table th {
-    height: 45px;
+    height: var(--head-row-height);
     color: var(--header-color);
     white-space: nowrap;
     font-size: var(--header-font-size);
@@ -44,7 +44,7 @@
 
 /*Table body cells*/
 .table td {
-    height: 40px;
+    height: var(--body-row-height);
     color: var(--body-font-color);
     font-size: var(--body-font-size);
     font-weight: var(--body-font-weight);
@@ -70,6 +70,7 @@
 .emptyBody{
     height: 50px;
     position: relative;
+    background-color: transparent !important;
 }
 .emptyBody .emptyBodyMessage{
     font-size: 16px;

@@ -3,6 +3,17 @@
     align-items: center;
     position: relative;
 }
+
+.centerAligned{
+    text-align: center !important;
+}
+.leftAligned{
+    text-align: left !important;
+}
+.rightAligned{
+    text-align: right !important;
+}
+
 .centerAligned .headElementContainer{
     justify-content: center;
 }
@@ -12,6 +23,7 @@
 .rightAligned .headElementContainer {
     justify-content: flex-end;
 }
+
 .headElementContainer>p{
     margin: 0;
     width: fit-content;
