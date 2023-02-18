@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ITableView } from "../../interafaces/blocks";
 import { ActionTypes } from "../../store/actions";
 import { useStore } from "../../store/store";
@@ -23,6 +23,7 @@ const View: React.FC<ITableView> = ({
   const [{ pageNumber, columns, mounted, stylesheet, current }, dispatch] =
     useStore();
   const tableRef = React.useRef<HTMLDivElement | null>(null);
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     if (!mounted) return;
@@ -38,7 +39,7 @@ const View: React.FC<ITableView> = ({
         newStyleVariables = { ...newStyleVariables, ...styleVariables };
     }
     Object.entries(newStyleVariables).map(([k, v]) => {
-      document.documentElement.style.setProperty(`--${k}`, v);
+      containerRef.current?.style.setProperty(`--${k}`, v);
     });
     dispatch({
       type: ActionTypes.UPDATE_PROPS,
@@ -135,7 +136,10 @@ const View: React.FC<ITableView> = ({
 
   const MemoisedContent = React.useMemo(
     () => (
-      <div className={`${styles.container} tableParentContainer`}>
+      <div
+        ref={containerRef}
+        className={`${styles.container} tableParentContainer`}
+      >
         {
           <>
             <Header />

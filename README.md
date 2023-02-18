@@ -384,6 +384,8 @@ export default App;
     <tr><td>"pagination-page-info-weight"</td><td>font-weight</td><td>"500"</td></tr>
     <tr><td>"head-row-height"</td><td>height</td><td>"45px"</td></tr>
     <tr><td>"body-row-height"</td><td>height</td><td>"40px"</td></tr>
+    <tr><td>"max-table-height"</td><td>height</td><td>"100%"</td></tr>
+    <tr><td>"cell-content-vertical-alignment"</td><td>cell-alignment</td><td>"middle"</td></tr>
   </tbody>
 </table>
 

@@ -63,6 +63,8 @@ type TStyleVariablesKeys =
   | "pagiantion-page-info-size"
   | "pagination-page-info-weight"
   | "body-row-height"
-  | "head-row-height";
+  | "head-row-height"
+  | "max-table-height"
+  | "cell-content-vertical-alignment";
 
 export type TStyleVariables = { [k in TStyleVariablesKeys]?: string };

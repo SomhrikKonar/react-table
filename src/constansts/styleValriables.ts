@@ -41,4 +41,6 @@ export const styleVariables: TStyleVariables = {
   "pagination-page-info-weight": " 500",
   "head-row-height": "45px",
   "body-row-height": "40px",
+  "max-table-height": "100%",
+  "cell-content-vertical-alignment": "middle",
 };
