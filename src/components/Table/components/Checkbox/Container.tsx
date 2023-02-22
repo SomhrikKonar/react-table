@@ -10,8 +10,8 @@ export const Container: React.FC<ICheckboxContainer> = ({
   header,
   index,
 }) => {
-  const [{ selectedRows, selectAll, current, mounted }, dispatch] = useStore();
-
+  const [{ selectedRows, selectAll, current }, dispatch] = useStore();
+  const [mounted, setMounted] = React.useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation();
     const value = e.target.checked;
@@ -40,6 +40,10 @@ export const Container: React.FC<ICheckboxContainer> = ({
         payload: { selectAll: value },
       });
   };
+
+  React.useEffect(() => {
+    setMounted(false);
+  }, []);
 
   React.useEffect(() => {
     if (!header || !mounted) return;

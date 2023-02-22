@@ -25,7 +25,6 @@ const Element: React.FC<IElement> = ({ data, column, index }) => {
 
   const inlineStyles = React.useMemo(() => {
     let styles: React.CSSProperties = {};
-    if (column.minWidth) styles["minWidth"] = column.minWidth;
     if (column.alignment) styles["textAlign"] = column.alignment;
     if (column.wrapCellContent === false) styles["whiteSpace"] = "nowrap";
     return styles;
