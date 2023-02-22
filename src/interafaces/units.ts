@@ -12,6 +12,7 @@ export type TColumn = {
   preventClick?: boolean;
   alignment?: "left" | "right" | "center";
   wrapCellContent?: boolean;
+  width?: React.CSSProperties["width"];
 };
 
 export type TData = { [key: string]: any };

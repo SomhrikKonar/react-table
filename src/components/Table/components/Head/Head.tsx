@@ -25,6 +25,7 @@ const Head: React.FC = () => {
             accessor,
             alignment,
             minWidth,
+            width,
           }) =>
             sortable && accessor ? (
               <Element
@@ -37,12 +38,13 @@ const Head: React.FC = () => {
                 accessor={accessor}
                 alignmentClassname={alignmentClassname(alignment)}
                 minWidth={minWidth || "auto"}
+                width={width || "auto"}
               />
             ) : (
               <th
                 key={name}
                 className={styles[alignmentClassname(alignment)]}
-                style={{ minWidth: minWidth || "auto" }}
+                style={{ minWidth: minWidth || "auto", width: width || "auto" }}
               >
                 {hideHeader ? "" : headerCell ? headerCell(current) : name}
               </th>

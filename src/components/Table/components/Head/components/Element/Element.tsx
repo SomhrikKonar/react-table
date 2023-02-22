@@ -14,6 +14,7 @@ const Element: React.FC<IHeadElement> = ({
   sortType,
   alignmentClassname,
   minWidth,
+  width,
 }) => {
   const [{ selectedSort, results, selectedFilter, search }, dispatch] =
     useStore();
@@ -51,7 +52,7 @@ const Element: React.FC<IHeadElement> = ({
   };
 
   return (
-    <th className={styles[alignmentClassname]} style={{ minWidth }}>
+    <th className={styles[alignmentClassname]} style={{ minWidth, width }}>
       <div className={styles.headElementContainer}>
         <p>{content}</p>
         <button onClick={handleOnClick}>

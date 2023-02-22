@@ -25,6 +25,7 @@ export const Columns: TColumn[] = [
     sortType: "number",
     searchable: true,
     sortable: true,
+    width: "30px",
   },
   {
     name: "Birth Date",

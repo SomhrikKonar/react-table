@@ -49,6 +49,7 @@ export interface IHeadElement {
   accessor: TColumn["accessor"];
   alignmentClassname: string;
   minWidth: React.CSSProperties["minWidth"];
+  width: React.CSSProperties["width"];
 }
 
 export interface IFilter {

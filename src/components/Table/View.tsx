@@ -19,9 +19,9 @@ const View: React.FC<ITableView> = ({
   fixedTableHeight,
   loading,
   data,
-  columns,
 }) => {
-  const [{ pageNumber, mounted, stylesheet, current }, dispatch] = useStore();
+  const [{ pageNumber, mounted, stylesheet, current, columns }, dispatch] =
+    useStore();
   const tableRef = React.useRef<HTMLDivElement | null>(null);
   const containerRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -75,10 +75,9 @@ const View: React.FC<ITableView> = ({
       type: ActionTypes.UPDATE_PROPS,
       payload: {
         original: data,
-        columns,
       },
     });
-  }, [data, columns]);
+  }, [data]);
 
   React.useEffect(() => {
     dispatch({ type: ActionTypes.UPDATE_PROPS, payload: { mounted: true } });

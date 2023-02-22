@@ -313,6 +313,15 @@ export default App;
       </td>
     </tr>
     <tr>
+      <td>width</td>
+      <td>css property</td>
+      <td>false</td>
+      <td>auto</td>
+      <td>
+        Provide width to your table cell
+      </td>
+    </tr>
+    <tr>
       <td>alignment</td>
       <td>css property</td>
       <td>false</td>
