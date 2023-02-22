@@ -42,7 +42,7 @@ export const Container: React.FC<ICheckboxContainer> = ({
   };
 
   React.useEffect(() => {
-    setMounted(false);
+    setMounted(true);
   }, []);
 
   React.useEffect(() => {
