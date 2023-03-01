@@ -66,6 +66,7 @@ type TStyleVariablesKeys =
   | "body-row-height"
   | "head-row-height"
   | "max-table-height"
-  | "cell-content-vertical-alignment";
+  | "cell-content-vertical-alignment"
+  | "empty-cell-height";
 
 export type TStyleVariables = { [k in TStyleVariablesKeys]?: string };

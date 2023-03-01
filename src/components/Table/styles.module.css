@@ -69,23 +69,14 @@
 
 /* No Row Found Container */
 .emptyBody{
-    height: 50px;
-    position: relative;
-    background-color: transparent !important;
-}
-.emptyBody .emptyBodyMessage{
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--body-font-color);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    position: absolute;
-    height: auto;
-    padding: 0;
-}
-.emptyBody:hover{
-    background-color: transparent !important;
+    position: sticky;
+    right: 0;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 /*Text alignment, padding*/

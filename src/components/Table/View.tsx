@@ -8,6 +8,7 @@ import { Head } from "./components/Head";
 import Header from "./components/Header";
 import Pagination from "./components/Pagination";
 import styles from "./styles.module.css";
+import EmptyBody from "./components/EmptyBody";
 const View: React.FC<ITableView> = ({
   numberOfRows,
   usePagination,
@@ -151,10 +152,11 @@ const View: React.FC<ITableView> = ({
               } tableContainer`}
               ref={tableRef}
             >
-              <table className={`${styles.table} table`}>
+              <table className={`${styles.table}  table`}>
                 <Head />
                 <Body tableContainerRef={tableRef} />
               </table>
+              <EmptyBody tableRef={tableRef} />
             </div>
             {usePagination && <Pagination />}
           </>

@@ -43,4 +43,5 @@ export const styleVariables: TStyleVariables = {
   "body-row-height": "40px",
   "max-table-height": "100%",
   "cell-content-vertical-alignment": "middle",
+  "empty-cell-height": "50px",
 };

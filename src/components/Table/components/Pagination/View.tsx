@@ -49,7 +49,7 @@ const View: React.FC<IPagination> = ({
   return (
     <div className={`${styles.container} tablePaginationContainer`}>
       <p className={`${styles.description} tablePaginationDescription`}>
-        Showing {minEntryNumber} to {maxEntryNumber} of {current.length} entries
+        Showing {minEntryNumber} to {maxEntryNumber} of {totalEntries} entries
       </p>
       <div className={styles.btnsContainer}>
         <button

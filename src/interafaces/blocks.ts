@@ -82,3 +82,7 @@ export interface ISelectInput {
   icon?: string;
   defaultMessage?: string;
 }
+
+export interface IEmptyBody {
+  tableRef: React.MutableRefObject<HTMLDivElement | null>;
+}

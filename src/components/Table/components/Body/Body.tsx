@@ -209,35 +209,13 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
             </tr>
           ))}
         </>
-      ) : loading ? (
-        <tr
-          className={`${styles.emptyBody} emptyTableBody`}
-          style={{
-            height: noRowAlertContainerHeight,
-          }}
-        >
-          {loadingComponent ? (
-            <td style={{ visibility: "hidden", padding: 0 }}>
-              <div>{loadingComponent}</div>
-            </td>
-          ) : (
-            ""
-          )}
-          <td className={`${styles.emptyBodyMessage} emptyTableBodyMessage`}>
-            {loadingComponent || "Loading ..."}
-          </td>
-        </tr>
       ) : (
-        <tr
-          className={`${styles.emptyBody} emptyTableBody`}
-          style={{
-            height: noRowAlertContainerHeight,
-          }}
-        >
-          <td className={`${styles.emptyBodyMessage} emptyTableBodyMessage`}>
-            No Rows Found
-          </td>
-        </tr>
+        <></>
+        // <tr>
+        //   {/* {columns.map(({ name }) => {
+        //     return <td key={name} style={{ height: 0, padding: 0 }}></td>;
+        //   })} */}
+        // </tr>
       )}
     </tbody>
   );
