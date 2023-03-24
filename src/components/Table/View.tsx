@@ -36,35 +36,32 @@ const View: React.FC<ITableView> = ({
   const updateStyleSheets = React.useCallback(() => {
     if (tableRef.current) {
       let newStyleVariables: TStyleVariables = {};
+      const tableChildrens = tableRef.current.children[0].children;
+      const tHead = tableChildrens[0];
       if (
         !styleVariables?.["head-row-height"] &&
-        stylesheet["head-row-height"] !==
-          tableRef.current.children[0].children[0].clientHeight + "px"
+        stylesheet["head-row-height"] !== tHead.clientHeight + "px"
       ) {
-        newStyleVariables["head-row-height"] =
-          tableRef.current.children[0].children[0].clientHeight + "px";
+        newStyleVariables["head-row-height"] = tHead.clientHeight + "px";
         containerRef.current?.style.setProperty(
           "--head-row-height",
           newStyleVariables["head-row-height"]
         );
       }
-
-      const tr = tableRef.current.children[0].children[1];
-
+      const tBody = tableChildrens[1];
       if (
         !loading &&
         !styleVariables?.["body-row-height"] &&
-        tr.children.length > 0 &&
-        stylesheet["body-row-height"] !== tr.children[0].clientHeight + "px"
+        tBody.children.length > 0 &&
+        stylesheet["body-row-height"] !== tBody.children[0].clientHeight + "px"
       ) {
         newStyleVariables["body-row-height"] =
-          tr.children[0].clientHeight + "px";
+          tBody.children[0].clientHeight + "px";
         containerRef.current?.style.setProperty(
           "--body-row-height",
           newStyleVariables["body-row-height"]
         );
       }
-
       if (
         newStyleVariables["head-row-height"] ||
         newStyleVariables["body-row-height"]
@@ -84,7 +81,7 @@ const View: React.FC<ITableView> = ({
   }, []);
 
   React.useEffect(() => {
-    updateStyleSheets();
+    if (!loading) setTimeout(updateStyleSheets, 1);
   }, [loading]);
 
   React.useEffect(() => {
