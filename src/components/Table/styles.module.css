@@ -32,7 +32,6 @@
     top: 0;
     background-color: var(--header-bg);
 }
-
 /*Table header cells*/
 .table th {
     height: var(--head-row-height);

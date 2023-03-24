@@ -4,6 +4,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import data from "../dummyData/sampleData.json";
 import { Columns } from "../dummyData/sampleColumn";
 import Loader from "../dummyData/Loader";
+import Row from "../dummyData/Row";
 
 export default {
   title: "My Components/Table",
@@ -23,9 +24,13 @@ Table.args = {
   usePagination: true,
   canSelectRows: false,
   handleRowSelection: (rows) => console.log(rows),
-  styleVariables: { "font-family": "Georgia, serif" },
+  styleVariables: {
+    "font-family": "Georgia, serif",
+    // "body-row-height": "60px",
+  },
   handleRowClick: (row) => console.log(row),
   fixedTableHeight: true,
   loading: false,
   loadingComponent: <Loader />,
+  RowComponent: <Row />,
 };

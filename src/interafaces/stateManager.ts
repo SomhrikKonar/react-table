@@ -1,5 +1,6 @@
-import { Dispatch } from "react";
+import { Dispatch, PropsWithChildren } from "react";
 import { ActionTypes } from "../store/actions";
+import { IRow } from "./blocks";
 import { TColumn, TData, TFilters, TStyleVariables } from "./units";
 
 export interface IAppState {
@@ -47,6 +48,7 @@ export interface IAppState {
   fixedTableHeight: boolean;
   loading: boolean;
   loadingComponent?: React.ReactNode;
+  RowComponent?: React.ReactElement<IRow>;
 }
 
 export interface IDefaultProps {
@@ -60,6 +62,7 @@ export interface IDefaultProps {
   canSelectRows?: boolean;
   loading?: boolean;
   loadingComponent?: React.ReactNode;
+  RowComponent?: React.ReactElement<IRow>;
   styleVariables?: TStyleVariables;
   fixedTableHeight?: boolean;
 }

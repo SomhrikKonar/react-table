@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 import { TColumn, TData, TStyleVariables } from "./units";
 
 export interface ITable {
@@ -14,6 +15,7 @@ export interface ITable {
   fixedTableHeight?: boolean;
   loading?: boolean;
   loadingComponent?: React.ReactNode;
+  RowComponent?: React.ReactElement<IRow>;
 }
 
 export type ITableView = Partial<ITable>;

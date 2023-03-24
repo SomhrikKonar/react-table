@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Pagination from "./components/Pagination";
 import styles from "./styles.module.css";
 import EmptyBody from "./components/EmptyBody";
+import { TStyleVariables } from "../../interafaces/units";
 const View: React.FC<ITableView> = ({
   numberOfRows,
   usePagination,
@@ -32,22 +33,71 @@ const View: React.FC<ITableView> = ({
     dispatch({ type: ActionTypes.SET_PAGE_NO, payload: 1 });
   }, [numberOfRows]);
 
+  const updateStyleSheets = React.useCallback(
+    (newVariables: TStyleVariables) => {
+      if (tableRef.current) {
+        let newStyleVariables: TStyleVariables = {};
+        if (!newVariables["head-row-height"]) {
+          if (
+            stylesheet["head-row-height"] !==
+            tableRef.current.children[0].children[0].clientHeight + "px"
+          ) {
+            newStyleVariables["head-row-height"] =
+              tableRef.current.children[0].children[0].clientHeight + "px";
+            containerRef.current?.style.setProperty(
+              "head-row-height",
+              newStyleVariables["head-row-height"]
+            );
+          }
+        }
+        const tr = tableRef.current.children[0].children[1].querySelector("tr");
+        if (
+          !newVariables["body-row-height"] &&
+          tr &&
+          stylesheet["body-row-height"] !== tr.clientHeight + "px"
+        ) {
+          newStyleVariables["body-row-height"] = tr.clientHeight + "px";
+          containerRef.current?.style.setProperty(
+            "body-row-height",
+            newStyleVariables["body-row-height"]
+          );
+        }
+        if (
+          newStyleVariables["head-row-height"] ||
+          newStyleVariables["body-row-height"]
+        ) {
+          dispatch({
+            type: ActionTypes.SET_STYLESHEET,
+            payload: newStyleVariables,
+          });
+        }
+      }
+    },
+    [stylesheet]
+  );
+
   React.useEffect(() => {
-    let newStyleVariables = { ...stylesheet };
-    if (styleVariables) {
-      let validObject = Object.keys(styleVariables).length > 0;
-      if (validObject)
-        newStyleVariables = { ...newStyleVariables, ...styleVariables };
-    }
-    Object.entries(newStyleVariables).map(([k, v]) => {
+    Object.entries(stylesheet).map(([k, v]) => {
       containerRef.current?.style.setProperty(`--${k}`, v);
     });
-    dispatch({
-      type: ActionTypes.UPDATE_PROPS,
-      payload: {
-        stylesheet: newStyleVariables,
-      },
-    });
+  }, []);
+
+  React.useEffect(() => {
+    let newStyleVariables: TStyleVariables = {};
+    if (styleVariables) {
+      let validObject = Object.keys(styleVariables).length > 0;
+      if (validObject) {
+        newStyleVariables = { ...styleVariables };
+        Object.entries(newStyleVariables).map(([k, v]) => {
+          containerRef.current?.style.setProperty(`--${k}`, v);
+        });
+        dispatch({
+          type: ActionTypes.SET_STYLESHEET,
+          payload: newStyleVariables,
+        });
+      }
+    }
+    updateStyleSheets(styleVariables || {});
   }, [styleVariables]);
 
   React.useEffect(() => {

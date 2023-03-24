@@ -43,6 +43,8 @@ export const mainReducer = (state: IAppState, action: IAction): IAppState => {
       return { ...state, search: payload };
     case ActionTypes.UPDATE_PROPS:
       return { ...state, ...payload };
+    case ActionTypes.SET_STYLESHEET:
+      return { ...state, stylesheet: { ...state.stylesheet, ...payload } };
     case ActionTypes.SET_SELECTED_ROWS:
       return { ...state, selectedRows: payload };
     case ActionTypes.UPDATE_RESULTS:

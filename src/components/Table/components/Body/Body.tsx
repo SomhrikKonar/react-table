@@ -20,49 +20,13 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
       stylesheet,
       fixedTableHeight,
       loading,
-      loadingComponent,
+      RowComponent,
       numberOfRows,
     },
     dispatch,
   ] = useStore();
 
   const [containerHeight, setContainerHeight] = React.useState<number>(0);
-
-  React.useEffect(() => {
-    if (tableContainerRef.current) {
-      const table_head_row_height =
-        tableContainerRef.current.children[0].children[0].clientHeight + "px";
-
-      document.documentElement.style.setProperty(
-        "head-row-height",
-        table_head_row_height
-      );
-
-      const tr =
-        tableContainerRef.current.children[0].children[1].querySelector("tr");
-      const table_body_row_height = !!tr
-        ? tr.clientHeight + "px"
-        : stylesheet["body-row-height"] || "auto";
-
-      document.documentElement.style.setProperty(
-        "head-row-height",
-        table_body_row_height
-      );
-
-      if (
-        table_head_row_height !== stylesheet["head-row-height"] ||
-        table_body_row_height !== stylesheet["body-row-height"]
-      ) {
-        let variables = { ...stylesheet };
-        variables["head-row-height"] = table_head_row_height;
-        variables["body-row-height"] = table_body_row_height;
-        dispatch({
-          type: ActionTypes.UPDATE_PROPS,
-          payload: { stylesheet: variables },
-        });
-      }
-    }
-  }, []);
 
   const handleKey = React.useCallback(
     (row: TData, index: number) => {
@@ -178,28 +142,29 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
     pageNumber,
     numberOfRows,
     totalNumberOfRows,
+    numberOfRows,
+    totalNumberOfRows,
   ]);
-
-  const noRowAlertContainerHeight = React.useMemo(() => {
-    if (!fixedTableHeight) return "50px";
-    return (containerHeight || 50) + "px";
-  }, [containerHeight, fixedTableHeight]);
 
   return (
     <tbody
-      className={handleRowClick ? styles.clickableRows : ""}
+      className={handleRowClick ? styles.clickableRows + " clickableRows" : ""}
       onClick={handleClick}
     >
       {current.length > 0 && !loading ? (
         <>
-          {current.map(
-            (row, index) =>
-              ((index >= minEntryIndex &&
-                index <= maxEntryIndex &&
-                usePagination) ||
-                !usePagination) && (
-                <Row key={handleKey(row, index)} index={index} data={row} />
-              )
+          {current.map((row, index) =>
+            ((index >= minEntryIndex &&
+              index <= maxEntryIndex &&
+              usePagination) ||
+              !usePagination) &&
+            React.isValidElement(RowComponent) ? (
+              <React.Fragment key={handleKey(row, index)}>
+                {React.cloneElement(RowComponent, { data: row, index: index })}
+              </React.Fragment>
+            ) : (
+              <Row key={handleKey(row, index)} index={index} data={row} />
+            )
           )}
           {dummyRows.map((_, index) => (
             <tr className={`${styles["emptyRows"]} emptyTableRows`} key={index}>
@@ -211,11 +176,6 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
         </>
       ) : (
         <></>
-        // <tr>
-        //   {/* {columns.map(({ name }) => {
-        //     return <td key={name} style={{ height: 0, padding: 0 }}></td>;
-        //   })} */}
-        // </tr>
       )}
     </tbody>
   );

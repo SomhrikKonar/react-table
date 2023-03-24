@@ -197,6 +197,12 @@ export default App;
       <td>"Loading ..."</td>
       <td>If provided it will displayed in the center of the table's body, when loading is true.</td>
     </tr>
+    <tr>
+      <td>RowComponent</td>
+      <td>React Component</td>
+      <td>N/A</td>
+      <td>If provided it will receive the row details and be responsible for rendering the row</td>
+    </tr>
   </tbody>
 </table>
 
@@ -395,6 +401,7 @@ export default App;
     <tr><td>"body-row-height"</td><td>height</td><td>"40px"</td></tr>
     <tr><td>"max-table-height"</td><td>height</td><td>"100%"</td></tr>
     <tr><td>"cell-content-vertical-alignment"</td><td>cell-alignment</td><td>"middle"</td></tr>
+    <tr><td>"empty-body-height"</td><td>height</td><td>"50px"</td></tr>
   </tbody>
 </table>
 
