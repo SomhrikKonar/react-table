@@ -33,48 +33,49 @@ const View: React.FC<ITableView> = ({
     dispatch({ type: ActionTypes.SET_PAGE_NO, payload: 1 });
   }, [numberOfRows]);
 
-  const updateStyleSheets = React.useCallback(
-    (newVariables: TStyleVariables) => {
-      if (tableRef.current) {
-        let newStyleVariables: TStyleVariables = {};
-        if (!newVariables["head-row-height"]) {
-          if (
-            stylesheet["head-row-height"] !==
-            tableRef.current.children[0].children[0].clientHeight + "px"
-          ) {
-            newStyleVariables["head-row-height"] =
-              tableRef.current.children[0].children[0].clientHeight + "px";
-            containerRef.current?.style.setProperty(
-              "head-row-height",
-              newStyleVariables["head-row-height"]
-            );
-          }
-        }
-        const tr = tableRef.current.children[0].children[1].querySelector("tr");
-        if (
-          !newVariables["body-row-height"] &&
-          tr &&
-          stylesheet["body-row-height"] !== tr.clientHeight + "px"
-        ) {
-          newStyleVariables["body-row-height"] = tr.clientHeight + "px";
-          containerRef.current?.style.setProperty(
-            "body-row-height",
-            newStyleVariables["body-row-height"]
-          );
-        }
-        if (
-          newStyleVariables["head-row-height"] ||
-          newStyleVariables["body-row-height"]
-        ) {
-          dispatch({
-            type: ActionTypes.SET_STYLESHEET,
-            payload: newStyleVariables,
-          });
-        }
+  const updateStyleSheets = React.useCallback(() => {
+    if (tableRef.current) {
+      let newStyleVariables: TStyleVariables = {};
+      if (
+        !styleVariables?.["head-row-height"] &&
+        stylesheet["head-row-height"] !==
+          tableRef.current.children[0].children[0].clientHeight + "px"
+      ) {
+        newStyleVariables["head-row-height"] =
+          tableRef.current.children[0].children[0].clientHeight + "px";
+        containerRef.current?.style.setProperty(
+          "--head-row-height",
+          newStyleVariables["head-row-height"]
+        );
       }
-    },
-    [stylesheet]
-  );
+
+      const tr = tableRef.current.children[0].children[1];
+
+      if (
+        !loading &&
+        !styleVariables?.["body-row-height"] &&
+        tr.children.length > 0 &&
+        stylesheet["body-row-height"] !== tr.children[0].clientHeight + "px"
+      ) {
+        newStyleVariables["body-row-height"] =
+          tr.children[0].clientHeight + "px";
+        containerRef.current?.style.setProperty(
+          "--body-row-height",
+          newStyleVariables["body-row-height"]
+        );
+      }
+
+      if (
+        newStyleVariables["head-row-height"] ||
+        newStyleVariables["body-row-height"]
+      ) {
+        dispatch({
+          type: ActionTypes.SET_STYLESHEET,
+          payload: newStyleVariables,
+        });
+      }
+    }
+  }, [stylesheet, loading, styleVariables]);
 
   React.useEffect(() => {
     Object.entries(stylesheet).map(([k, v]) => {
@@ -83,13 +84,17 @@ const View: React.FC<ITableView> = ({
   }, []);
 
   React.useEffect(() => {
+    updateStyleSheets();
+  }, [loading]);
+
+  React.useEffect(() => {
     let newStyleVariables: TStyleVariables = {};
     if (styleVariables) {
       let validObject = Object.keys(styleVariables).length > 0;
       if (validObject) {
         newStyleVariables = { ...styleVariables };
         Object.entries(newStyleVariables).map(([k, v]) => {
-          containerRef.current?.style.setProperty(`--${k}`, v);
+          containerRef.current?.style.setProperty(`--${k}`, v, "important");
         });
         dispatch({
           type: ActionTypes.SET_STYLESHEET,
@@ -97,7 +102,6 @@ const View: React.FC<ITableView> = ({
         });
       }
     }
-    updateStyleSheets(styleVariables || {});
   }, [styleVariables]);
 
   React.useEffect(() => {

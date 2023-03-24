@@ -23,7 +23,6 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
       RowComponent,
       numberOfRows,
     },
-    dispatch,
   ] = useStore();
 
   const [containerHeight, setContainerHeight] = React.useState<number>(0);
@@ -110,6 +109,7 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
     if (!tableContainerRef.current) {
       return [];
     }
+
     const overflowHidden =
       tableContainerRef.current.style.getPropertyValue("overflow-y") ===
       "hidden";
@@ -142,9 +142,17 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
     pageNumber,
     numberOfRows,
     totalNumberOfRows,
-    numberOfRows,
-    totalNumberOfRows,
   ]);
+
+  const isValid = React.useCallback(
+    (index: number) => {
+      return (
+        (index >= minEntryIndex && index <= maxEntryIndex && usePagination) ||
+        !usePagination
+      );
+    },
+    [minEntryIndex, maxEntryIndex, usePagination]
+  );
 
   return (
     <tbody
@@ -153,18 +161,19 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
     >
       {current.length > 0 && !loading ? (
         <>
-          {current.map((row, index) =>
-            ((index >= minEntryIndex &&
-              index <= maxEntryIndex &&
-              usePagination) ||
-              !usePagination) &&
-            React.isValidElement(RowComponent) ? (
-              <React.Fragment key={handleKey(row, index)}>
-                {React.cloneElement(RowComponent, { data: row, index: index })}
-              </React.Fragment>
-            ) : (
-              <Row key={handleKey(row, index)} index={index} data={row} />
-            )
+          {current.map(
+            (row, index) =>
+              isValid(index) &&
+              (React.isValidElement(RowComponent) ? (
+                <React.Fragment key={handleKey(row, index)}>
+                  {React.cloneElement(RowComponent, {
+                    data: row,
+                    index: index,
+                  })}
+                </React.Fragment>
+              ) : (
+                <Row key={handleKey(row, index)} index={index} data={row} />
+              ))
           )}
           {dummyRows.map((_, index) => (
             <tr className={`${styles["emptyRows"]} emptyTableRows`} key={index}>

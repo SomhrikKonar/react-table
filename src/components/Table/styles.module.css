@@ -32,18 +32,26 @@
     top: 0;
     background-color: var(--header-bg);
 }
+/* Table header row */
+.table thead tr{
+    height: var(--head-row-height);
+}
 /*Table header cells*/
 .table th {
-    height: var(--head-row-height);
     color: var(--header-color);
     white-space: nowrap;
     font-size: var(--header-font-size);
     font-weight: var(--header-font-weight);
 }
 
+
+/* Table body */
+/*Table body row*/
+.table tbody tr{
+    height: var(--body-row-height);
+}
 /*Table body cells*/
 .table td {
-    height: var(--body-row-height);
     color: var(--body-font-color);
     font-size: var(--body-font-size);
     font-weight: var(--body-font-weight);
