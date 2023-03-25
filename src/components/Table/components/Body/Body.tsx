@@ -4,7 +4,6 @@ import { useStore } from "../../../../store/store";
 import { Row } from "./Components/Rows";
 import styles from "../../styles.module.css";
 import { IBodyProps } from "../../../../interafaces/blocks";
-import { ActionTypes } from "../../../../store/actions";
 
 const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
   const [
@@ -101,7 +100,7 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
   }, [stylesheet["body-row-height"], containerHeight]);
 
   const dummyRows = React.useMemo(() => {
-    if (!tableContainerRef.current) {
+    if (!tableContainerRef.current || loading) {
       return [];
     }
 
@@ -114,8 +113,11 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
       return [];
     }
 
-    const numberOfAvailableRows =
+    let numberOfAvailableRows =
       current.length - (pageNumber - 1) * numberOfRows;
+
+    if (numberOfAvailableRows > numberOfRows)
+      numberOfAvailableRows = numberOfRows;
 
     if (current.length <= 0 || loading) {
       if (!overflowHidden) tableContainerRef.current.style.overflowY = "hidden";

@@ -48,19 +48,23 @@ const View: React.FC<ITableView> = ({
           newStyleVariables["head-row-height"]
         );
       }
-      const tBody = tableChildrens[1];
+
+      const tBody_rows = tableChildrens[1].children;
       if (
         !loading &&
         !styleVariables?.["body-row-height"] &&
-        tBody.children.length > 0 &&
-        stylesheet["body-row-height"] !== tBody.children[0].clientHeight + "px"
+        tBody_rows.length > 0
       ) {
-        newStyleVariables["body-row-height"] =
-          tBody.children[0].clientHeight + "px";
-        containerRef.current?.style.setProperty(
-          "--body-row-height",
-          newStyleVariables["body-row-height"]
-        );
+        const tr = tBody_rows[0];
+        const style = window.getComputedStyle(tr);
+
+        if (stylesheet["body-row-height"] !== style.height) {
+          newStyleVariables["body-row-height"] = style.height;
+          containerRef.current?.style.setProperty(
+            "--body-row-height",
+            newStyleVariables["body-row-height"]
+          );
+        }
       }
       if (
         newStyleVariables["head-row-height"] ||
@@ -81,7 +85,7 @@ const View: React.FC<ITableView> = ({
   }, []);
 
   React.useEffect(() => {
-    if (!loading) window.requestAnimationFrame(updateStyleSheets);
+    if (!loading) setTimeout(updateStyleSheets, 25);
   }, [loading]);
 
   React.useEffect(() => {
