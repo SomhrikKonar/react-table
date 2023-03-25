@@ -81,7 +81,7 @@ const View: React.FC<ITableView> = ({
   }, []);
 
   React.useEffect(() => {
-    if (!loading) setTimeout(updateStyleSheets, 1);
+    if (!loading) window.requestAnimationFrame(updateStyleSheets);
   }, [loading]);
 
   React.useEffect(() => {
