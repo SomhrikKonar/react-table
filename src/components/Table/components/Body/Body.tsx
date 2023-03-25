@@ -64,21 +64,16 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
   );
 
   React.useEffect(() => {
-    if (!fixedTableHeight) return;
+    if (!fixedTableHeight || !stylesheet["head-row-height"]) return;
 
-    let headRowHeight =
-      parseInt(
-        stylesheet["head-row-height"]?.substring(
-          0,
-          stylesheet["head-row-height"].length - 2
-        ) || "0"
-      ) + 1;
+    let headRowHeight = parseInt(
+      stylesheet["head-row-height"]?.substring(
+        0,
+        stylesheet["head-row-height"].length - 2
+      )
+    );
 
-    if (tableContainerRef.current) {
-      setContainerHeight(
-        tableContainerRef.current.clientHeight - headRowHeight
-      );
-    }
+    window.requestAnimationFrame(setHeight);
 
     function setHeight() {
       if (tableContainerRef.current) {
@@ -96,11 +91,11 @@ const Body: React.FC<IBodyProps> = ({ tableContainerRef }) => {
   }, [fixedTableHeight, stylesheet["head-row-height"]]);
 
   const totalNumberOfRows = React.useMemo(() => {
-    const bodyRowHeight =
-      stylesheet["body-row-height"]?.substring(
-        0,
-        stylesheet["body-row-height"].length - 2
-      ) || "0";
+    if (!stylesheet["body-row-height"]) return 0;
+    const bodyRowHeight = stylesheet["body-row-height"]?.substring(
+      0,
+      stylesheet["body-row-height"].length - 2
+    );
 
     return Math.ceil(containerHeight / parseInt(bodyRowHeight));
   }, [stylesheet["body-row-height"], containerHeight]);

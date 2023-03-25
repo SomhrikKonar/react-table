@@ -12,7 +12,9 @@ export default {
 } as ComponentMeta<typeof TableStory>;
 
 const Template: ComponentStory<typeof TableStory> = (args) => (
-  <TableStory {...args} />
+  <div style={{ height: "80vh" }}>
+    <TableStory {...args} />
+  </div>
 );
 
 export const Table = Template.bind({});
