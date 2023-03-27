@@ -85,7 +85,11 @@ const View: React.FC<ITableView> = ({
   }, []);
 
   React.useEffect(() => {
-    if (!loading) setTimeout(updateStyleSheets, 25);
+    let timeout: NodeJS.Timeout;
+    if (!loading) timeout = setTimeout(updateStyleSheets, 25);
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
   }, [loading]);
 
   React.useEffect(() => {
@@ -95,7 +99,7 @@ const View: React.FC<ITableView> = ({
       if (validObject) {
         newStyleVariables = { ...styleVariables };
         Object.entries(newStyleVariables).map(([k, v]) => {
-          containerRef.current?.style.setProperty(`--${k}`, v, "important");
+          containerRef.current?.style.setProperty(`--${k}`, v);
         });
         dispatch({
           type: ActionTypes.SET_STYLESHEET,

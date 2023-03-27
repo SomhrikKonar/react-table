@@ -49,7 +49,7 @@
 
 .optionsContainer{
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     background-color: var(--options-container-bg);
     border: var(--options-container-border);
     box-shadow: var(--options-container-box-shadow);
