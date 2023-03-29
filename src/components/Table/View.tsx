@@ -22,10 +22,16 @@ const View: React.FC<ITableView> = ({
   loading,
   data,
 }) => {
-  const [{ pageNumber, mounted, stylesheet, current, columns }, dispatch] =
-    useStore();
+  const [
+    { pageNumber, stylesheet, current, columns, mounted, original },
+    dispatch,
+  ] = useStore();
   const tableRef = React.useRef<HTMLDivElement | null>(null);
   const containerRef = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    dispatch({ type: ActionTypes.UPDATE_PROPS, payload: { mounted: true } });
+  }, []);
 
   React.useEffect(() => {
     if (!mounted) return;
@@ -130,7 +136,7 @@ const View: React.FC<ITableView> = ({
   ]);
 
   React.useEffect(() => {
-    if (!mounted) return;
+    if (!mounted && original.length > 0) return;
     dispatch({
       type: ActionTypes.UPDATE_PROPS,
       payload: {
@@ -138,10 +144,6 @@ const View: React.FC<ITableView> = ({
       },
     });
   }, [data]);
-
-  React.useEffect(() => {
-    dispatch({ type: ActionTypes.UPDATE_PROPS, payload: { mounted: true } });
-  }, []);
 
   React.useEffect(() => {
     if (!columns || columns.length <= 0) return;
