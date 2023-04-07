@@ -138,6 +138,12 @@ export default App;
       <td>to be used as keys for rows.</td>
     </tr>
     <tr>
+      <td>tableRef</td>
+      <td>ref{useRef}</td>
+      <td>N/A</td>
+      <td>You can pass a reference to the table. It emits a function: scrollToTop, which will allow you to manually controll scrolling of table body.</td>
+    </tr>
+    <tr>
       <td>numberOfRows</td>
       <td>number</td>
       <td>25</td>
@@ -202,6 +208,12 @@ export default App;
       <td>React Component</td>
       <td>N/A</td>
       <td>If provided it will receive the row details and be responsible for rendering the row</td>
+    </tr>
+    <tr>
+      <td>preventAutoScroll</td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>By default table scrolls to initial position everytime data is altered, pass true to prevent this.However, table will auto-scroll during page change.</td>
     </tr>
   </tbody>
 </table>

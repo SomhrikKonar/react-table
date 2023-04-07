@@ -15,6 +15,10 @@ export type TColumn = {
   width?: React.CSSProperties["width"];
 };
 
+export type TForwardRefFunctions = {
+  scrollToTop: () => void;
+};
+
 export type TData = { [key: string]: any };
 
 export type TFilters = {

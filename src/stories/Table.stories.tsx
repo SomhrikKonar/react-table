@@ -32,4 +32,5 @@ Table.args = {
   loading: false,
   loadingComponent: <Loader />,
   RowComponent: <Row />,
+  preventAutoScroll: true,
 };

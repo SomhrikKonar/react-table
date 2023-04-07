@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { TColumn, TData, TStyleVariables } from "./units";
+import { TColumn, TData, TForwardRefFunctions, TStyleVariables } from "./units";
 
 export interface ITable {
   columns: TColumn[];
@@ -16,6 +16,8 @@ export interface ITable {
   loading?: boolean;
   loadingComponent?: React.ReactNode;
   RowComponent?: React.ReactElement<IRow>;
+  tableRef?: React.MutableRefObject<TForwardRefFunctions | null>;
+  preventAutoScroll?: boolean;
 }
 
 export type ITableView = Partial<ITable>;

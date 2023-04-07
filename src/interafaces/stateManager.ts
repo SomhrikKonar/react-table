@@ -1,4 +1,4 @@
-import { Dispatch, PropsWithChildren } from "react";
+import { Dispatch } from "react";
 import { ActionTypes } from "../store/actions";
 import { IRow } from "./blocks";
 import { TColumn, TData, TFilters, TStyleVariables } from "./units";
@@ -49,6 +49,7 @@ export interface IAppState {
   loading: boolean;
   loadingComponent?: React.ReactNode;
   RowComponent?: React.ReactElement<IRow>;
+  preventAutoScroll: boolean;
 }
 
 export interface IDefaultProps {
@@ -65,6 +66,7 @@ export interface IDefaultProps {
   RowComponent?: React.ReactElement<IRow>;
   styleVariables?: TStyleVariables;
   fixedTableHeight?: boolean;
+  preventAutoScroll?: boolean;
 }
 
 export type TAppContext = [IAppState, Dispatch<IAction>];

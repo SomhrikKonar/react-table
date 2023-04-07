@@ -30,4 +30,5 @@ export const initialState: IAppState = {
   mounted: false,
   fixedTableHeight: false,
   loading: false,
+  preventAutoScroll: false,
 };
