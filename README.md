@@ -259,7 +259,7 @@ export default App;
       </td>
     </tr>
     <tr>
-      <td>filer</td>
+      <td>filter</td>
       <td>boolean</td>
       <td>false</td>
       <td>false</td>
